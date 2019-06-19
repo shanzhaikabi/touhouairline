@@ -2,11 +2,10 @@ package com.ecust.touhouairline.repository;
 
 import com.ecust.touhouairline.entity.DemoEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-import java.util.Optional;
-
+@Repository
 public interface DemoRepository extends JpaRepository<DemoEntity,Integer> {
-
-    Optional<DemoEntity> findById(Integer id);
-    <S extends DemoEntity> S save(S s);
+    DemoEntity getOne(Integer id);
+    DemoEntity saveAndFlush(DemoEntity entity);
 }
