@@ -3,6 +3,7 @@ package com.ecust.touhouairline.entity;
 import javax.persistence.*;
 
 @Entity
+@Table(name="demo")
 public class DemoEntity {
     private int id;
     private String name;
