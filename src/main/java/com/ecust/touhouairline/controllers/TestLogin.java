@@ -17,8 +17,8 @@ public class TestLogin {
     public ModelMap showCharacter(String id){
         System.out.println("114514");
         ModelMap map = new ModelMap();
-        if(id.equals("12345")){
-            map.put("result","success");
+        if(id!=null && id.equals("12345")) {
+            map.put("result", "success");
             System.out.println("24岁");
         }
         return map;
