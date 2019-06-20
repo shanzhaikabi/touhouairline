@@ -4,7 +4,6 @@ target/
 !**/src/main/**
 !**/src/test/**
 touhoufront/
-impl/
 
 ### STS ###
 .apt_generated
@@ -21,6 +20,7 @@ out
 *.iws
 *.iml
 *.ipr
+classes
 
 ### NetBeans ###
 /nbproject/private/
