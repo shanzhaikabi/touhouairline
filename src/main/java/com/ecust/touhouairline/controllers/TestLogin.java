@@ -1,5 +1,6 @@
 package com.ecust.touhouairline.controllers;
 
+import com.ecust.touhouairline.entity.DemoEntity;
 import com.ecust.touhouairline.service.DemoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,8 +25,9 @@ public class TestLogin {
         System.out.println("114514");
         ModelMap map = new ModelMap();
         if(id!=null && id.equals("12345")) {
-            map.put("result", "success");
-            System.out.println("24岁，是学生" + demoService.getDemoEntityNameById(id));
+            DemoEntity entity = demoService.getDemoEntityByNameAndPassword("123","123");
+            System.out.println("24岁，是学生" + entity);
+            map.put("result", entity);
         }
         return map;
     }

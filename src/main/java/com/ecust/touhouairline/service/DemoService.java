@@ -12,9 +12,12 @@ public class DemoService {
     @Autowired
     DemoRepository demoRepository;
 
-    public String getDemoEntityNameById(String id){
+    public DemoEntity getDemoEntityById(String id){
         DemoEntity entity = demoRepository.getOne(Integer.valueOf(id));
-        if (entity != null) return entity.getName();
-        return null;
+        return entity;
+    }
+
+    public DemoEntity getDemoEntityByNameAndPassword(String name,String password){
+        return demoRepository.findByNameAndPassword(name,password);
     }
 }
