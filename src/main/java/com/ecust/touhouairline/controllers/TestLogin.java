@@ -19,7 +19,7 @@ public class TestLogin {
         ModelMap map = new ModelMap();
         if(id!=null && id.equals("12345")) {
             map.put("result", "success");
-            System.out.println("24岁");
+            System.out.println("24岁，是学生");
         }
         return map;
     }
