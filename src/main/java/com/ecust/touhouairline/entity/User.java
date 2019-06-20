@@ -8,8 +8,11 @@ import java.util.Objects;
 public class User {
     @Id
     private String Id;
-    private String AccountName;
-    private String Password;
+    private String accountName;
+    private String password;
+
+
+    private Chara character;
     public String getId() {
         return Id;
     }
@@ -19,19 +22,26 @@ public class User {
     }
 
     public String getAccountName() {
-        return AccountName;
+        return accountName;
     }
 
     public void setAccountName(String accountName) {
-        AccountName = accountName;
+        this.accountName = accountName;
     }
 
     public String getPassword() {
-        return Password;
+        return password;
     }
 
     public void setPassword(String password) {
-        Password = password;
+        this.password = password;
+    }
+    public Chara getCharacter() {
+        return character;
+    }
+
+    public void setCharacter(Chara character) {
+        this.character = character;
     }
     @Override
     public boolean equals(Object o) {
