@@ -40,7 +40,6 @@ public class LoginService {
         String checkUser = checkUserWhenRegister(userEntityTmp);
         if (checkUser.equals("yes")){
             userRepository.save(userEntityTmp.getUserEntity());
-
             return "success";
         }
         else return checkUser;

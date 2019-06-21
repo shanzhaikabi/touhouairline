@@ -19,19 +19,19 @@ public class TestController{
 
     @Test
     public void registerTest1(){
-        UserEntityTmp userEntityTmp = new UserEntityTmp("ysxb","114514","11451419","redtea@ecust.edu.cn","1919810");
+        UserEntityTmp userEntityTmp = new UserEntityTmp("ysxb","114514","11451419","redtea@ecust.edu.cn","1919810","野兽先辈");
         System.out.println(loginService.register(userEntityTmp));
     }
 
     @Test
     public void registerTest2(){
-        UserEntityTmp userEntityTmp = new UserEntityTmp("ysxb","114514","114514","redtea@ecust.edu.cn","1919810");
+        UserEntityTmp userEntityTmp = new UserEntityTmp("ysxb","114514","114514","redtea@ecust.edu.cn","1919810","野兽先辈");
         System.out.println(loginService.register(userEntityTmp));
     }
 
     @Test
     public void registerTest3(){
-        UserEntityTmp userEntityTmp = new UserEntityTmp("ysxb","114514","114514","redtea@ecust.edu.cn","1919810");
+        UserEntityTmp userEntityTmp = new UserEntityTmp("ysxb","114514","114514","redtea@ecust.edu.cn","1919810","野兽先辈");
         System.out.println(loginService.register(userEntityTmp));
     }
 }
