@@ -40,6 +40,7 @@ public class LoginService {
         String checkUser = checkUserWhenRegister(userEntityTmp);
         if (checkUser.equals("yes")){
             userRepository.save(userEntityTmp.getUserEntity());
+
             return "success";
         }
         else return checkUser;
@@ -49,10 +50,10 @@ public class LoginService {
         if (userRepository.existsById(user.getUsername())) return "用户名已存在";
         if (user.getPassword().length() < 6 || user.getPassword().length() > 33) return "密码长度在6～11位";
         if (!user.getPassword().equals(user.getPasswordAgain())) return "两次密码不一致";
+        if (user.getNickname().isEmpty()) return "昵称不能为空";
         if (user.getEmail().isEmpty()) return "邮箱不能为空";
         if (user.getPhone().isEmpty()) return "电话不能为空";
         return "yes";
     }
-
 
 }
