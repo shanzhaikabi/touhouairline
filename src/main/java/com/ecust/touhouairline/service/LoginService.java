@@ -1,14 +1,11 @@
 package com.ecust.touhouairline.service;
 
-import com.ecust.touhouairline.entity.TmpEntity;
 import com.ecust.touhouairline.entity.UserEntity;
-import com.ecust.touhouairline.repository.TmpRepository;
+import com.ecust.touhouairline.entity.UserEntityTmp;
 import com.ecust.touhouairline.repository.UserRepository;
+import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * @author 姚迟亮
@@ -21,41 +18,41 @@ public class LoginService {
     private UserRepository userRepository;
 
     /**
-     * @param AccountName 账户名
-     * @param Password 密码
+     * @param username 账户名
+     * @param password 密码
      * @return 成功返回Success，失败返回"用户名或密码错误"
      */
-    String Login(String AccountName,String Password){
-        TmpEntity User = tmpRepository.findByAccountNameAndPassword(AccountName,Password);
+    String Login(String username,String password){
+        UserEntity User = userRepository.findByUsernameAndPassword(username,password).get();
         if(User == null){
             return "用户名或密码错误";
         }
         else{
-            return "Success";
+            return "success";
         }
     }
 
     /**
-     *
-     * @param username
-     * @param password
+     * @param userEntityTmp 封装好的用户信息
      * @return 成功返回success,失败返回失败原因
      */
-    public String register(String username,String password,String passwordAgain){
-        UserEntity user = userRepository.getOne(username);
-        if (user != null) return "用户已存在";
-        if (!password.equals(passwordAgain)) return "两次密码不一致";
-        String checkPassword = checkPassword(password);
-        if (checkPassword.equals("yes")){
-            UserEntity userEntity = new UserEntity(username,password);
-            userRepository.save(userEntity);
+    public String register(UserEntityTmp userEntityTmp){
+        String checkUser = checkUserWhenRegister(userEntityTmp);
+        if (checkUser.equals("yes")){
+            userRepository.save(userEntityTmp.getUserEntity());
             return "success";
         }
-        else return checkPassword;
+        else return checkUser;
     }
 
-    public String checkPassword(String password){
-        if (password.length() < 6 || password.length() > 33) return "密码长度在6～11位";
+    private String checkUserWhenRegister(UserEntityTmp user){
+        if (userRepository.existsById(user.getUsername())) return "用户名已存在";
+        if (user.getPassword().length() < 6 || user.getPassword().length() > 33) return "密码长度在6～11位";
+        if (!user.getPassword().equals(user.getPasswordAgain())) return "两次密码不一致";
+        if (user.getEmail().isEmpty()) return "邮箱不能为空";
+        if (user.getPhone().isEmpty()) return "电话不能为空";
         return "yes";
     }
+
+
 }

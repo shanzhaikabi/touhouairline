@@ -1,5 +1,6 @@
 package com.ecust.touhouairline.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,6 +13,7 @@ import java.io.PrintWriter;
 
 @Controller
 public class SampleController {
+
     @RequestMapping("/test")
     public ModelMap AddCharacter(HttpServletResponse response) throws IOException {
         PrintWriter printWriter = response.getWriter();
