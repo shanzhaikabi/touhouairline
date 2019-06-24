@@ -14,7 +14,7 @@ public class PlaneEntity {
     private int firstClass;
 
     @Id
-    @Column(name = "planeNo")
+    @Column(name = "planeno")
     public String getPlaneNo() {
         return planeNo;
     }
@@ -24,7 +24,7 @@ public class PlaneEntity {
     }
 
     @Basic
-    @Column(name = "planeType")
+    @Column(name = "planetype")
     public String getPlaneType() {
         return planeType;
     }
@@ -34,7 +34,7 @@ public class PlaneEntity {
     }
 
     @Basic
-    @Column(name = "economyClass")
+    @Column(name = "economyclass")
     public int getEconomyClass() {
         return economyClass;
     }
@@ -44,7 +44,7 @@ public class PlaneEntity {
     }
 
     @Basic
-    @Column(name = "premiumClass")
+    @Column(name = "premiumclass")
     public int getPremiumClass() {
         return premiumClass;
     }
@@ -54,7 +54,7 @@ public class PlaneEntity {
     }
 
     @Basic
-    @Column(name = "firstClass")
+    @Column(name = "firstclass")
     public int getFirstClass() {
         return firstClass;
     }

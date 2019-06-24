@@ -14,12 +14,12 @@ public class UserEntity {
   private String email;
   private String nickName;
   private Integer credit;
-  private CharacterAssociationEntity characterAssociationsByUserNo;
+  private CharacterEntity characterByUserNo;
   private Collection<OrderMasterEntity> ordermastersByUserNo;
   private Collection<PassengerEntity> passengersByUserNo;
 
   @Id
-  @Column(name = "userNo")
+  @Column(name = "userno")
   public String getUserName() {
     return userName;
   }
@@ -39,7 +39,7 @@ public class UserEntity {
   }
 
   @Basic
-  @Column(name = "userPhone")
+  @Column(name = "userphone")
   public String getUserPhone() {
     return userPhone;
   }
@@ -59,7 +59,7 @@ public class UserEntity {
   }
 
   @Basic
-  @Column(name = "nickName")
+  @Column(name = "nickname")
   public String getNickName() {
     return nickName;
   }
@@ -96,16 +96,17 @@ public class UserEntity {
     return Objects.hash(userName, nickName, password, userPhone, email, credit);
   }
 
-  @OneToOne(mappedBy = "userByUserNo")
-  public CharacterAssociationEntity getCharacterAssociationsByUserNo() {
-    return characterAssociationsByUserNo;
+  @ManyToOne
+  @JoinColumn(name = "characterno", referencedColumnName = "characterno", nullable = false)
+  public CharacterEntity getCharacterByUserNo() {
+    return characterByUserNo;
   }
 
-  public void setCharacterAssociationsByUserNo(CharacterAssociationEntity characterassociationsByUserNo) {
-    this.characterAssociationsByUserNo = characterassociationsByUserNo;
+  public void setCharacterByUserNo(CharacterEntity characterByUserNo) {
+    this.characterByUserNo = characterByUserNo;
   }
 
-  @OneToMany(mappedBy = "userByUserNo")
+  @OneToMany(mappedBy = "userNo")
   public Collection<OrderMasterEntity> getOrdermastersByUserNo() {
     return ordermastersByUserNo;
   }
@@ -114,7 +115,7 @@ public class UserEntity {
     this.ordermastersByUserNo = ordermastersByUserNo;
   }
 
-  @OneToMany(mappedBy = "userByUserNo")
+  @OneToMany(mappedBy = "userNo")
   public Collection<PassengerEntity> getPassengersByUserNo() {
     return passengersByUserNo;
   }

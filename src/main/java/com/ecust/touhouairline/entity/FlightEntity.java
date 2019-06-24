@@ -9,7 +9,7 @@ import java.util.Objects;
 @Table(name = "flight", schema = "flight", catalog = "")
 public class FlightEntity {
     private String flightNo;
-    private String planeNo;
+    //private String planeNo;
     private Timestamp departTime;
     private Timestamp arrivedTime;
     private String departPlace;
@@ -21,10 +21,10 @@ public class FlightEntity {
     private String flightState;
     private Integer mileage;
     private PlaneEntity planeByPlaneNo;
-    private Collection<OrderMasterEntity> ordermastersByFlightNo;
+    //private Collection<OrderMasterEntity> ordermastersByFlightNo;
 
     @Id
-    @Column(name = "flightNo")
+    @Column(name = "flightno")
     public String getFlightNo() {
         return flightNo;
     }
@@ -33,6 +33,7 @@ public class FlightEntity {
         this.flightNo = flightNo;
     }
 
+    /*
     @Basic
     @Column(name = "planeNo")
     public String getPlaneNo() {
@@ -41,10 +42,10 @@ public class FlightEntity {
 
     public void setPlaneNo(String planeNo) {
         this.planeNo = planeNo;
-    }
+    }*/
 
     @Basic
-    @Column(name = "departTime")
+    @Column(name = "departtime")
     public Timestamp getDepartTime() {
         return departTime;
     }
@@ -54,7 +55,7 @@ public class FlightEntity {
     }
 
     @Basic
-    @Column(name = "arrivedTime")
+    @Column(name = "arrivedtime")
     public Timestamp getArrivedTime() {
         return arrivedTime;
     }
@@ -64,7 +65,7 @@ public class FlightEntity {
     }
 
     @Basic
-    @Column(name = "departPlace")
+    @Column(name = "departplace")
     public String getDepartPlace() {
         return departPlace;
     }
@@ -84,7 +85,7 @@ public class FlightEntity {
     }
 
     @Basic
-    @Column(name = "economyPrice")
+    @Column(name = "economyprice")
     public int getEconomyPrice() {
         return economyPrice;
     }
@@ -94,7 +95,7 @@ public class FlightEntity {
     }
 
     @Basic
-    @Column(name = "premiumPrice")
+    @Column(name = "premiumprice")
     public int getPremiumPrice() {
         return premiumPrice;
     }
@@ -104,7 +105,7 @@ public class FlightEntity {
     }
 
     @Basic
-    @Column(name = "firstPrice")
+    @Column(name = "firstprice")
     public int getFirstPrice() {
         return firstPrice;
     }
@@ -114,7 +115,7 @@ public class FlightEntity {
     }
 
     @Basic
-    @Column(name = "boardingGate")
+    @Column(name = "boardinggate")
     public String getBoardingGate() {
         return boardingGate;
     }
@@ -124,7 +125,7 @@ public class FlightEntity {
     }
 
     @Basic
-    @Column(name = "flightState")
+    @Column(name = "flightstate")
     public String getFlightState() {
         return flightState;
     }
@@ -152,7 +153,7 @@ public class FlightEntity {
                 premiumPrice == that.premiumPrice &&
                 firstPrice == that.firstPrice &&
                 Objects.equals(flightNo, that.flightNo) &&
-                Objects.equals(planeNo, that.planeNo) &&
+                //Objects.equals(planeNo, that.planeNo) &&
                 Objects.equals(departTime, that.departTime) &&
                 Objects.equals(arrivedTime, that.arrivedTime) &&
                 Objects.equals(departPlace, that.departPlace) &&
@@ -164,11 +165,11 @@ public class FlightEntity {
 
     @Override
     public int hashCode() {
-        return Objects.hash(flightNo, planeNo, departTime, arrivedTime, departPlace, destination, economyPrice, premiumPrice, firstPrice, boardingGate, flightState, mileage);
+        return Objects.hash(flightNo, /*planeNo,*/ departTime, arrivedTime, departPlace, destination, economyPrice, premiumPrice, firstPrice, boardingGate, flightState, mileage);
     }
 
     @ManyToOne
-    @JoinColumn(name = "planeNo", referencedColumnName = "planeNo", nullable = false)
+    @JoinColumn(name = "planeno", referencedColumnName = "planeno", nullable = false)
     public PlaneEntity getPlaneByPlaneNo() {
         return planeByPlaneNo;
     }
@@ -176,8 +177,8 @@ public class FlightEntity {
     public void setPlaneByPlaneNo(PlaneEntity planeByPlaneNo) {
         this.planeByPlaneNo = planeByPlaneNo;
     }
-
-    @OneToMany(mappedBy = "flightByFlightNo")
+    /*
+    @OneToMany(mappedBy = "flightNo")
     public Collection<OrderMasterEntity> getOrdermastersByFlightNo() {
         return ordermastersByFlightNo;
     }
@@ -185,4 +186,5 @@ public class FlightEntity {
     public void setOrdermastersByFlightNo(Collection<OrderMasterEntity> ordermastersByFlightNo) {
         this.ordermastersByFlightNo = ordermastersByFlightNo;
     }
+    */
 }

@@ -7,22 +7,21 @@ import java.util.Objects;
 @Entity
 @Table(name = "authoritytable", schema = "flight", catalog = "")
 public class AuthorityEntity {
-    private String auhtorityNo;
+    private String authorityNo;
     private String authorityName;
-    private Collection<AuthorityAssociationEntity> authorityAssociationsByAuhtorityNo;
 
     @Id
-    @Column(name = "auhtorityNo")
-    public String getAuhtorityNo() {
-        return auhtorityNo;
+    @Column(name = "authorityno")
+    public String getAuthorityNo() {
+        return authorityNo;
     }
 
-    public void setAuhtorityNo(String auhtorityNo) {
-        this.auhtorityNo = auhtorityNo;
+    public void setAuthorityNo(String authorityNo) {
+        this.authorityNo = authorityNo;
     }
 
     @Basic
-    @Column(name = "authorityName")
+    @Column(name = "authorityname")
     public String getAuthorityName() {
         return authorityName;
     }
@@ -36,21 +35,12 @@ public class AuthorityEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         AuthorityEntity that = (AuthorityEntity) o;
-        return Objects.equals(auhtorityNo, that.auhtorityNo) &&
+        return Objects.equals(authorityNo, that.authorityNo) &&
                 Objects.equals(authorityName, that.authorityName);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(auhtorityNo, authorityName);
-    }
-
-    @OneToMany(mappedBy = "authoritytableByAuhtorityNo")
-    public Collection<AuthorityAssociationEntity> getAuthorityAssociationsByAuhtorityNo() {
-        return authorityAssociationsByAuhtorityNo;
-    }
-
-    public void setAuthorityAssociationsByAuhtorityNo(Collection<AuthorityAssociationEntity> authorityassociationsByAuhtorityNo) {
-        this.authorityAssociationsByAuhtorityNo = authorityassociationsByAuhtorityNo;
+        return Objects.hash(authorityNo, authorityName);
     }
 }

@@ -16,7 +16,7 @@ public class PassengerEntity {
     private String passengerPhone;
 
     @Id
-    @Column(name = "passengerNo")
+    @Column(name = "passengerno")
     public String getPassengerNo() {
         return passengerNo;
     }
@@ -26,7 +26,7 @@ public class PassengerEntity {
     }
 
     @Basic
-    @Column(name = "userNo")
+    @Column(name = "userno")
     public String getUserNo() {
         return userNo;
     }
@@ -36,7 +36,7 @@ public class PassengerEntity {
     }
 
     @Basic
-    @Column(name = "passengerName")
+    @Column(name = "passengername")
     public String getPassengerName() {
         return passengerName;
     }
@@ -46,7 +46,7 @@ public class PassengerEntity {
     }
 
     @Basic
-    @Column(name = "passengerType")
+    @Column(name = "passengertype")
     public String getPassengerType() {
         return passengerType;
     }
@@ -86,7 +86,7 @@ public class PassengerEntity {
     }
 
     @Basic
-    @Column(name = "passengerPhone")
+    @Column(name = "passengerphone")
     public String getPassengerPhone() {
         return passengerPhone;
     }

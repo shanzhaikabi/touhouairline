@@ -9,7 +9,7 @@ import java.util.Objects;
 @Table(name = "ordermaster", schema = "flight", catalog = "")
 public class OrderMasterEntity {
     private String orderNo;
-    private String flightNo;
+    //private String flightNo;
     private String userNo;
     private Date orderDate;
     private String ticketClass;
@@ -21,7 +21,7 @@ public class OrderMasterEntity {
     private UserEntity userByUserNo;
 
     @Id
-    @Column(name = "orderNo")
+    @Column(name = "orderno")
     public String getOrderNo() {
         return orderNo;
     }
@@ -29,7 +29,7 @@ public class OrderMasterEntity {
     public void setOrderNo(String orderNo) {
         this.orderNo = orderNo;
     }
-
+    /*
     @Basic
     @Column(name = "flightNo")
     public String getFlightNo() {
@@ -38,10 +38,10 @@ public class OrderMasterEntity {
 
     public void setFlightNo(String flightNo) {
         this.flightNo = flightNo;
-    }
+    }*/
 
     @Basic
-    @Column(name = "userNo")
+    @Column(name = "userno",insertable = false,updatable = false)
     public String getUserNo() {
         return userNo;
     }
@@ -51,7 +51,7 @@ public class OrderMasterEntity {
     }
 
     @Basic
-    @Column(name = "orderDate")
+    @Column(name = "orderdate")
     public Date getOrderDate() {
         return orderDate;
     }
@@ -61,7 +61,7 @@ public class OrderMasterEntity {
     }
 
     @Basic
-    @Column(name = "ticketClass")
+    @Column(name = "ticketclass")
     public String getTicketClass() {
         return ticketClass;
     }
@@ -91,7 +91,7 @@ public class OrderMasterEntity {
     }
 
     @Basic
-    @Column(name = "usedCredit")
+    @Column(name = "usedcredit")
     public Integer getUsedCredit() {
         return usedCredit;
     }
@@ -107,7 +107,7 @@ public class OrderMasterEntity {
         OrderMasterEntity that = (OrderMasterEntity) o;
         return sum == that.sum &&
                 Objects.equals(orderNo, that.orderNo) &&
-                Objects.equals(flightNo, that.flightNo) &&
+                //Objects.equals(flightNo, that.flightNo) &&
                 Objects.equals(userNo, that.userNo) &&
                 Objects.equals(orderDate, that.orderDate) &&
                 Objects.equals(ticketClass, that.ticketClass) &&
@@ -117,10 +117,10 @@ public class OrderMasterEntity {
 
     @Override
     public int hashCode() {
-        return Objects.hash(orderNo, flightNo, userNo, orderDate, ticketClass, sum, state, usedCredit);
+        return Objects.hash(orderNo, /*flightNo,*/ userNo, orderDate, ticketClass, sum, state, usedCredit);
     }
 
-    @OneToMany(mappedBy = "ordermasterByOrderNo")
+    @OneToMany(mappedBy = "orderNo")
     public Collection<OrderDetailEntity> getOrderdetailsByOrderNo() {
         return orderdetailsByOrderNo;
     }
@@ -130,7 +130,7 @@ public class OrderMasterEntity {
     }
 
     @ManyToOne
-    @JoinColumn(name = "flightNo", referencedColumnName = "flightNo", nullable = false)
+    @JoinColumn(name = "flightno", referencedColumnName = "flightno", nullable = false)
     public FlightEntity getFlightByFlightNo() {
         return flightByFlightNo;
     }
@@ -140,7 +140,7 @@ public class OrderMasterEntity {
     }
 
     @ManyToOne
-    @JoinColumn(name = "userNo", referencedColumnName = "userNo", nullable = false)
+    @JoinColumn(name = "userno", referencedColumnName = "userno", nullable = false)
     public UserEntity getUserByUserNo() {
         return userByUserNo;
     }

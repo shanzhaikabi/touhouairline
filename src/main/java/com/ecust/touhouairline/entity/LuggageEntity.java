@@ -12,7 +12,7 @@ public class LuggageEntity {
     private int shippingFee;
 
     @Id
-    @Column(name = "luggageNo")
+    @Column(name = "luggageno")
     public String getLuggageNo() {
         return luggageNo;
     }
@@ -22,7 +22,7 @@ public class LuggageEntity {
     }
 
     @Basic
-    @Column(name = "detailNo")
+    @Column(name = "detailno")
     public String getDetailNo() {
         return detailNo;
     }
@@ -42,7 +42,7 @@ public class LuggageEntity {
     }
 
     @Basic
-    @Column(name = "shippingFee")
+    @Column(name = "shippingfee")
     public int getShippingFee() {
         return shippingFee;
     }

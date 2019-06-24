@@ -9,10 +9,10 @@ import java.util.Objects;
 public class CharacterEntity {
     private String characterNo;
     private String characterName;
-    private Collection<AuthorityAssociationEntity> authorityAssociationsByCharacterNo;
+    private Collection<AuthorityEntity> authorityByCharacterNo;
 
     @Id
-    @Column(name = "characterNo")
+    @Column(name = "characterno")
     public String getCharacterNo() {
         return characterNo;
     }
@@ -22,7 +22,7 @@ public class CharacterEntity {
     }
 
     @Basic
-    @Column(name = "characterName")
+    @Column(name = "charactername")
     public String getCharacterName() {
         return characterName;
     }
@@ -45,13 +45,18 @@ public class CharacterEntity {
         return Objects.hash(characterNo, characterName);
     }
 
-    @OneToMany(mappedBy = "charactertableByCharacterNo")
-    public Collection<AuthorityAssociationEntity> getAuthorityAssociationsByCharacterNo() {
-        return authorityAssociationsByCharacterNo;
+    @ManyToMany
+    @JoinTable(name = "authorityassociation",joinColumns = {
+            @JoinColumn(name = "characterno",referencedColumnName = "characterno")},
+            inverseJoinColumns = {
+            @JoinColumn(name = "authorityno",referencedColumnName = "authorityno")
+    })
+    public Collection<AuthorityEntity> getAuthorityByCharacterNo() {
+        return authorityByCharacterNo;
     }
 
-    public void setAuthorityAssociationsByCharacterNo(Collection<AuthorityAssociationEntity> authorityassociationsByCharacterNo) {
-        this.authorityAssociationsByCharacterNo = authorityassociationsByCharacterNo;
+    public void setAuthorityByCharacterNo(Collection<AuthorityEntity> authorityByCharacterNo) {
+        this.authorityByCharacterNo = authorityByCharacterNo;
     }
 
 }

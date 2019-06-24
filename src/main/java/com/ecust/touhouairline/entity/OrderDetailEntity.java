@@ -21,7 +21,7 @@ public class OrderDetailEntity {
     private OrderMasterEntity ordermasterByOrderNo;
 
     @Id
-    @Column(name = "detailNo")
+    @Column(name = "detailno")
     public String getDetailNo() {
         return detailNo;
     }
@@ -31,7 +31,7 @@ public class OrderDetailEntity {
     }
 
     @Basic
-    @Column(name = "orderNo")
+    @Column(name = "orderno",insertable = false,updatable = false)
     public String getOrderNo() {
         return orderNo;
     }
@@ -41,7 +41,7 @@ public class OrderDetailEntity {
     }
 
     @Basic
-    @Column(name = "passengerName")
+    @Column(name = "passengername")
     public String getPassengerName() {
         return passengerName;
     }
@@ -51,7 +51,7 @@ public class OrderDetailEntity {
     }
 
     @Basic
-    @Column(name = "passengerType")
+    @Column(name = "passengertype")
     public String getPassengerType() {
         return passengerType;
     }
@@ -142,7 +142,7 @@ public class OrderDetailEntity {
         return Objects.hash(detailNo, orderNo, passengerName, passengerType, identity, passport, phone, fee, state, seat);
     }
 
-    @OneToMany(mappedBy = "orderdetailByDetailNo")
+    @OneToMany(mappedBy = "detailNo")
     public Collection<LuggageEntity> getLuggagesByDetailNo() {
         return luggagesByDetailNo;
     }
@@ -152,7 +152,7 @@ public class OrderDetailEntity {
     }
 
     @ManyToOne
-    @JoinColumn(name = "orderNo", referencedColumnName = "orderNo", nullable = false)
+    @JoinColumn(name = "orderno", referencedColumnName = "orderno", nullable = false)
     public OrderMasterEntity getOrdermasterByOrderNo() {
         return ordermasterByOrderNo;
     }
