@@ -15,8 +15,9 @@ public class OrderDetailEntity {
     private String passport;
     private String phone;
     private Integer fee;
+    //是否已取票
     private String state;
-    private String seat;
+    private Integer seat;
     private Collection<LuggageEntity> luggagesByDetailNo;
     private OrderMasterEntity ordermasterByOrderNo;
 
@@ -112,11 +113,11 @@ public class OrderDetailEntity {
 
     @Basic
     @Column(name = "seat")
-    public String getSeat() {
+    public Integer getSeat() {
         return seat;
     }
 
-    public void setSeat(String seat) {
+    public void setSeat(Integer seat) {
         this.seat = seat;
     }
 
