@@ -1,18 +1,19 @@
 package com.ecust.touhouairline.entity;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.Objects;
 
 @Entity
 @Table(name = "charactertable", schema = "flight", catalog = "")
-public class CharacterEntity {
+public class CharacterEntity implements Serializable {
     private String characterNo;
     private String characterName;
     private Collection<AuthorityEntity> authorityByCharacterNo;
 
     @Id
-    @Column(name = "characterNo")
+    @Column(name = "characterno")
     public String getCharacterNo() {
         return characterNo;
     }
@@ -22,7 +23,7 @@ public class CharacterEntity {
     }
 
     @Basic
-    @Column(name = "characterName")
+    @Column(name = "charactername")
     public String getCharacterName() {
         return characterName;
     }
@@ -46,10 +47,10 @@ public class CharacterEntity {
     }
 
     @ManyToMany
-    @JoinTable(name = "authorityAssociation",joinColumns = {
-            @JoinColumn(name = "characterNo",referencedColumnName = "characterNo")},
+    @JoinTable(name = "authorityassociation",joinColumns = {
+            @JoinColumn(name = "characterno",referencedColumnName = "characterno")},
             inverseJoinColumns = {
-            @JoinColumn(name = "authorityNo",referencedColumnName = "authorityNo")
+            @JoinColumn(name = "authorityno",referencedColumnName = "authorityno")
     })
     public Collection<AuthorityEntity> getAuthorityByCharacterNo() {
         return authorityByCharacterNo;

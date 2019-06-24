@@ -1,11 +1,12 @@
 package com.ecust.touhouairline.entity;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Objects;
 
 @Entity
 @Table(name = "passenger", schema = "flight", catalog = "")
-public class PassengerEntity {
+public class PassengerEntity implements Serializable {
     private String passengerNo;
     private String userNo;
     private String passengerName;
@@ -16,7 +17,8 @@ public class PassengerEntity {
     private String passengerPhone;
 
     @Id
-    @Column(name = "passengerNo")
+    @GeneratedValue
+    @Column(name = "passengerno")
     public String getPassengerNo() {
         return passengerNo;
     }
@@ -26,7 +28,7 @@ public class PassengerEntity {
     }
 
     @Basic
-    @Column(name = "userNo")
+    @Column(name = "userno")
     public String getUserNo() {
         return userNo;
     }
@@ -36,7 +38,7 @@ public class PassengerEntity {
     }
 
     @Basic
-    @Column(name = "passengerName")
+    @Column(name = "passengername")
     public String getPassengerName() {
         return passengerName;
     }
@@ -46,7 +48,7 @@ public class PassengerEntity {
     }
 
     @Basic
-    @Column(name = "passengerType")
+    @Column(name = "passengertype")
     public String getPassengerType() {
         return passengerType;
     }
@@ -86,7 +88,7 @@ public class PassengerEntity {
     }
 
     @Basic
-    @Column(name = "passengerPhone")
+    @Column(name = "passengerphone")
     public String getPassengerPhone() {
         return passengerPhone;
     }

@@ -1,12 +1,13 @@
 package com.ecust.touhouairline.entity;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.Objects;
 
 @Entity
 @Table(name = "orderdetail", schema = "flight", catalog = "")
-public class OrderDetailEntity {
+public class OrderDetailEntity implements Serializable {
     private String detailNo;
     private String orderNo;
     private String passengerName;
@@ -16,12 +17,12 @@ public class OrderDetailEntity {
     private String phone;
     private Integer fee;
     private String state;
-    private String seat;
+    private Integer seat;
     private Collection<LuggageEntity> luggagesByDetailNo;
     private OrderMasterEntity ordermasterByOrderNo;
 
     @Id
-    @Column(name = "detailNo")
+    @Column(name = "detailno")
     public String getDetailNo() {
         return detailNo;
     }
@@ -31,7 +32,7 @@ public class OrderDetailEntity {
     }
 
     @Basic
-    @Column(name = "orderNo",insertable = false,updatable = false)
+    @Column(name = "orderno",insertable = false,updatable = false)
     public String getOrderNo() {
         return orderNo;
     }
@@ -41,7 +42,7 @@ public class OrderDetailEntity {
     }
 
     @Basic
-    @Column(name = "passengerName")
+    @Column(name = "passengername")
     public String getPassengerName() {
         return passengerName;
     }
@@ -51,7 +52,7 @@ public class OrderDetailEntity {
     }
 
     @Basic
-    @Column(name = "passengerType")
+    @Column(name = "passengertype")
     public String getPassengerType() {
         return passengerType;
     }
@@ -112,11 +113,11 @@ public class OrderDetailEntity {
 
     @Basic
     @Column(name = "seat")
-    public String getSeat() {
+    public Integer getSeat() {
         return seat;
     }
 
-    public void setSeat(String seat) {
+    public void setSeat(Integer seat) {
         this.seat = seat;
     }
 
@@ -152,7 +153,7 @@ public class OrderDetailEntity {
     }
 
     @ManyToOne
-    @JoinColumn(name = "orderNo", referencedColumnName = "orderNo", nullable = false)
+    @JoinColumn(name = "orderno", referencedColumnName = "orderno", nullable = false)
     public OrderMasterEntity getOrdermasterByOrderNo() {
         return ordermasterByOrderNo;
     }

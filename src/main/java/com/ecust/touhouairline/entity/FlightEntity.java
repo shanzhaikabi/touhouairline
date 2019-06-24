@@ -1,15 +1,15 @@
 package com.ecust.touhouairline.entity;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.Collection;
 import java.util.Objects;
 
 @Entity
 @Table(name = "flight", schema = "flight", catalog = "")
-public class FlightEntity {
+public class FlightEntity implements Serializable {
     private String flightNo;
-    //private String planeNo;
     private Timestamp departTime;
     private Timestamp arrivedTime;
     private String departPlace;
@@ -20,11 +20,11 @@ public class FlightEntity {
     private String boardingGate;
     private String flightState;
     private Integer mileage;
+    private String planeNo;
     private PlaneEntity planeByPlaneNo;
-    //private Collection<OrderMasterEntity> ordermastersByFlightNo;
 
     @Id
-    @Column(name = "flightNo")
+    @Column(name = "flightno")
     public String getFlightNo() {
         return flightNo;
     }
@@ -33,19 +33,8 @@ public class FlightEntity {
         this.flightNo = flightNo;
     }
 
-    /*
     @Basic
-    @Column(name = "planeNo")
-    public String getPlaneNo() {
-        return planeNo;
-    }
-
-    public void setPlaneNo(String planeNo) {
-        this.planeNo = planeNo;
-    }*/
-
-    @Basic
-    @Column(name = "departTime")
+    @Column(name = "departtime")
     public Timestamp getDepartTime() {
         return departTime;
     }
@@ -55,7 +44,7 @@ public class FlightEntity {
     }
 
     @Basic
-    @Column(name = "arrivedTime")
+    @Column(name = "arrivedtime")
     public Timestamp getArrivedTime() {
         return arrivedTime;
     }
@@ -65,7 +54,7 @@ public class FlightEntity {
     }
 
     @Basic
-    @Column(name = "departPlace")
+    @Column(name = "departplace")
     public String getDepartPlace() {
         return departPlace;
     }
@@ -85,7 +74,7 @@ public class FlightEntity {
     }
 
     @Basic
-    @Column(name = "economyPrice")
+    @Column(name = "economyprice")
     public int getEconomyPrice() {
         return economyPrice;
     }
@@ -95,7 +84,7 @@ public class FlightEntity {
     }
 
     @Basic
-    @Column(name = "premiumPrice")
+    @Column(name = "premiumprice")
     public int getPremiumPrice() {
         return premiumPrice;
     }
@@ -105,7 +94,7 @@ public class FlightEntity {
     }
 
     @Basic
-    @Column(name = "firstPrice")
+    @Column(name = "firstprice")
     public int getFirstPrice() {
         return firstPrice;
     }
@@ -115,7 +104,7 @@ public class FlightEntity {
     }
 
     @Basic
-    @Column(name = "boardingGate")
+    @Column(name = "boardinggate")
     public String getBoardingGate() {
         return boardingGate;
     }
@@ -125,7 +114,7 @@ public class FlightEntity {
     }
 
     @Basic
-    @Column(name = "flightState")
+    @Column(name = "flightstate")
     public String getFlightState() {
         return flightState;
     }
@@ -169,7 +158,7 @@ public class FlightEntity {
     }
 
     @ManyToOne
-    @JoinColumn(name = "planeNo", referencedColumnName = "planeNo", nullable = false)
+    @JoinColumn(name = "planeno", referencedColumnName = "planeno", nullable = false)
     public PlaneEntity getPlaneByPlaneNo() {
         return planeByPlaneNo;
     }
@@ -177,14 +166,13 @@ public class FlightEntity {
     public void setPlaneByPlaneNo(PlaneEntity planeByPlaneNo) {
         this.planeByPlaneNo = planeByPlaneNo;
     }
-    /*
-    @OneToMany(mappedBy = "flightNo")
-    public Collection<OrderMasterEntity> getOrdermastersByFlightNo() {
-        return ordermastersByFlightNo;
+
+    @Transient
+    public String getPlaneNo() {
+        return planeNo;
     }
 
-    public void setOrdermastersByFlightNo(Collection<OrderMasterEntity> ordermastersByFlightNo) {
-        this.ordermastersByFlightNo = ordermastersByFlightNo;
+    public void setPlaneNo(String planeNo) {
+        this.planeNo = planeNo;
     }
-    */
 }

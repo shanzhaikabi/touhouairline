@@ -1,6 +1,8 @@
 package com.ecust.touhouairline.entity;
 
-public class UserEntityTmp{
+import java.io.Serializable;
+
+public class UserEntityTmp implements Serializable {
     private UserEntity userEntity;
     private String passwordAgain;
 

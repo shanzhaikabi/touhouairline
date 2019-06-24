@@ -1,18 +1,19 @@
 package com.ecust.touhouairline.entity;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Objects;
 
 @Entity
 @Table(name = "luggage", schema = "flight", catalog = "")
-public class LuggageEntity {
+public class LuggageEntity implements Serializable {
     private String luggageNo;
     private String detailNo;
     private int weight;
     private int shippingFee;
 
     @Id
-    @Column(name = "luggageNo")
+    @Column(name = "luggageno")
     public String getLuggageNo() {
         return luggageNo;
     }
@@ -22,7 +23,7 @@ public class LuggageEntity {
     }
 
     @Basic
-    @Column(name = "detailNo")
+    @Column(name = "detailno")
     public String getDetailNo() {
         return detailNo;
     }
@@ -42,7 +43,7 @@ public class LuggageEntity {
     }
 
     @Basic
-    @Column(name = "shippingFee")
+    @Column(name = "shippingfee")
     public int getShippingFee() {
         return shippingFee;
     }

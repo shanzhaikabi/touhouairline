@@ -1,17 +1,18 @@
 package com.ecust.touhouairline.entity;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.Objects;
 
 @Entity
 @Table(name = "authoritytable", schema = "flight", catalog = "")
-public class AuthorityEntity {
+public class AuthorityEntity implements Serializable {
     private String authorityNo;
     private String authorityName;
 
     @Id
-    @Column(name = "authorityNo")
+    @Column(name = "authorityno")
     public String getAuthorityNo() {
         return authorityNo;
     }
@@ -21,7 +22,7 @@ public class AuthorityEntity {
     }
 
     @Basic
-    @Column(name = "authorityName")
+    @Column(name = "authorityname")
     public String getAuthorityName() {
         return authorityName;
     }

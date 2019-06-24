@@ -1,13 +1,14 @@
 package com.ecust.touhouairline.entity;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.sql.Date;
 import java.util.Collection;
 import java.util.Objects;
 
 @Entity
 @Table(name = "ordermaster", schema = "flight", catalog = "")
-public class OrderMasterEntity {
+public class OrderMasterEntity implements Serializable {
     private String orderNo;
     //private String flightNo;
     private String userNo;
@@ -21,7 +22,7 @@ public class OrderMasterEntity {
     private UserEntity userByUserNo;
 
     @Id
-    @Column(name = "orderNo")
+    @Column(name = "orderno")
     public String getOrderNo() {
         return orderNo;
     }
@@ -41,7 +42,7 @@ public class OrderMasterEntity {
     }*/
 
     @Basic
-    @Column(name = "userNo",insertable = false,updatable = false)
+    @Column(name = "userno",insertable = false,updatable = false)
     public String getUserNo() {
         return userNo;
     }
@@ -51,7 +52,7 @@ public class OrderMasterEntity {
     }
 
     @Basic
-    @Column(name = "orderDate")
+    @Column(name = "orderdate")
     public Date getOrderDate() {
         return orderDate;
     }
@@ -61,7 +62,7 @@ public class OrderMasterEntity {
     }
 
     @Basic
-    @Column(name = "ticketClass")
+    @Column(name = "ticketclass")
     public String getTicketClass() {
         return ticketClass;
     }
@@ -91,7 +92,7 @@ public class OrderMasterEntity {
     }
 
     @Basic
-    @Column(name = "usedCredit")
+    @Column(name = "usedcredit")
     public Integer getUsedCredit() {
         return usedCredit;
     }
@@ -130,7 +131,7 @@ public class OrderMasterEntity {
     }
 
     @ManyToOne
-    @JoinColumn(name = "flightNo", referencedColumnName = "flightNo", nullable = false)
+    @JoinColumn(name = "flightno", referencedColumnName = "flightno", nullable = false)
     public FlightEntity getFlightByFlightNo() {
         return flightByFlightNo;
     }
@@ -140,7 +141,7 @@ public class OrderMasterEntity {
     }
 
     @ManyToOne
-    @JoinColumn(name = "userNo", referencedColumnName = "userNo", nullable = false)
+    @JoinColumn(name = "userno", referencedColumnName = "userno", nullable = false)
     public UserEntity getUserByUserNo() {
         return userByUserNo;
     }
