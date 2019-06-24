@@ -7,7 +7,7 @@ import java.util.Objects;
 
 public class AuthorityAssociationEntityPK implements Serializable {
     private String characterNo;
-    private String auhtorityNo;
+    private String authorityNo;
 
     @Column(name = "characterNo")
     @Id
@@ -19,14 +19,14 @@ public class AuthorityAssociationEntityPK implements Serializable {
         this.characterNo = characterNo;
     }
 
-    @Column(name = "auhtorityNo")
+    @Column(name = "authorityNo")
     @Id
-    public String getAuhtorityNo() {
-        return auhtorityNo;
+    public String getAuthorityNo() {
+        return authorityNo;
     }
 
-    public void setAuhtorityNo(String auhtorityNo) {
-        this.auhtorityNo = auhtorityNo;
+    public void setAuthorityNo(String authorityNo) {
+        this.authorityNo = authorityNo;
     }
 
     @Override
@@ -35,11 +35,11 @@ public class AuthorityAssociationEntityPK implements Serializable {
         if (o == null || getClass() != o.getClass()) return false;
         AuthorityAssociationEntityPK that = (AuthorityAssociationEntityPK) o;
         return Objects.equals(characterNo, that.characterNo) &&
-                Objects.equals(auhtorityNo, that.auhtorityNo);
+                Objects.equals(authorityNo, that.authorityNo);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(characterNo, auhtorityNo);
+        return Objects.hash(characterNo, authorityNo);
     }
 }

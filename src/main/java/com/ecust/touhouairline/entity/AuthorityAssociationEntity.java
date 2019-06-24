@@ -8,7 +8,7 @@ import java.util.Objects;
 @IdClass(AuthorityAssociationEntityPK.class)
 public class AuthorityAssociationEntity {
     private String characterNo;
-    private String auhtorityNo;
+    private String authorityNo;
     private CharacterEntity characterByCharacterNo;
     private AuthorityEntity authorityByAuhtorityNo;
 
@@ -23,13 +23,13 @@ public class AuthorityAssociationEntity {
     }
 
     @Id
-    @Column(name = "auhtorityNo")
-    public String getAuhtorityNo() {
-        return auhtorityNo;
+    @Column(name = "authorityNo")
+    public String getAuthorityNo() {
+        return authorityNo;
     }
 
-    public void setAuhtorityNo(String auhtorityNo) {
-        this.auhtorityNo = auhtorityNo;
+    public void setAuthorityNo(String auhtorityNo) {
+        this.authorityNo = auhtorityNo;
     }
 
     @Override
@@ -38,12 +38,12 @@ public class AuthorityAssociationEntity {
         if (o == null || getClass() != o.getClass()) return false;
         AuthorityAssociationEntity that = (AuthorityAssociationEntity) o;
         return Objects.equals(characterNo, that.characterNo) &&
-                Objects.equals(auhtorityNo, that.auhtorityNo);
+                Objects.equals(authorityNo, that.authorityNo);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(characterNo, auhtorityNo);
+        return Objects.hash(characterNo, authorityNo);
     }
 
     @ManyToOne

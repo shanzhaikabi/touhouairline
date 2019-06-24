@@ -1,4 +1,4 @@
-package com.ecust.touhouairline.controllers;
+package com.ecust.touhouairline.controller;
 
 import com.fasterxml.jackson.databind.ser.BeanSerializer;
 import com.fasterxml.jackson.databind.util.JSONPObject;
@@ -28,7 +28,7 @@ public class TestLogin {
         else map.put("result", (new TestClass(110,"110")));
         return map;
     }
-    @RequestMapping(value="home",method = RequestMethod.GET)
+    @RequestMapping(value="home")
     public ModelMap testFabric(String id){
         System.out.println("114514");
         ModelMap map = new ModelMap();
