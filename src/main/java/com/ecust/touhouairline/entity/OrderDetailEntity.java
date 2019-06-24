@@ -6,7 +6,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "orderdetail", schema = "flight", catalog = "")
-public class OrderdetailEntity {
+public class OrderDetailEntity {
     private String detailNo;
     private String orderNo;
     private String passengerName;
@@ -18,7 +18,7 @@ public class OrderdetailEntity {
     private String state;
     private String seat;
     private Collection<LuggageEntity> luggagesByDetailNo;
-    private OrdermasterEntity ordermasterByOrderNo;
+    private OrderMasterEntity ordermasterByOrderNo;
 
     @Id
     @Column(name = "detailNo")
@@ -124,7 +124,7 @@ public class OrderdetailEntity {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        OrderdetailEntity that = (OrderdetailEntity) o;
+        OrderDetailEntity that = (OrderDetailEntity) o;
         return Objects.equals(detailNo, that.detailNo) &&
                 Objects.equals(orderNo, that.orderNo) &&
                 Objects.equals(passengerName, that.passengerName) &&
@@ -153,11 +153,11 @@ public class OrderdetailEntity {
 
     @ManyToOne
     @JoinColumn(name = "orderNo", referencedColumnName = "orderNo", nullable = false)
-    public OrdermasterEntity getOrdermasterByOrderNo() {
+    public OrderMasterEntity getOrdermasterByOrderNo() {
         return ordermasterByOrderNo;
     }
 
-    public void setOrdermasterByOrderNo(OrdermasterEntity ordermasterByOrderNo) {
+    public void setOrdermasterByOrderNo(OrderMasterEntity ordermasterByOrderNo) {
         this.ordermasterByOrderNo = ordermasterByOrderNo;
     }
 }

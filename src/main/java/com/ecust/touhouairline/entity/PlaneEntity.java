@@ -12,7 +12,6 @@ public class PlaneEntity {
     private int economyClass;
     private int premiumClass;
     private int firstClass;
-    private Collection<FlightEntity> flightsByPlaneNo;
 
     @Id
     @Column(name = "planeNo")
@@ -81,12 +80,4 @@ public class PlaneEntity {
         return Objects.hash(planeNo, planeType, economyClass, premiumClass, firstClass);
     }
 
-    @OneToMany(mappedBy = "planeByPlaneNo")
-    public Collection<FlightEntity> getFlightsByPlaneNo() {
-        return flightsByPlaneNo;
-    }
-
-    public void setFlightsByPlaneNo(Collection<FlightEntity> flightsByPlaneNo) {
-        this.flightsByPlaneNo = flightsByPlaneNo;
-    }
 }

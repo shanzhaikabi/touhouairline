@@ -5,12 +5,12 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "authorityassociation", schema = "flight", catalog = "")
-@IdClass(AuthorityassociationEntityPK.class)
-public class AuthorityassociationEntity {
+@IdClass(AuthorityAssociationEntityPK.class)
+public class AuthorityAssociationEntity {
     private String characterNo;
     private String auhtorityNo;
-    private CharactertableEntity charactertableByCharacterNo;
-    private AuthoritytableEntity authoritytableByAuhtorityNo;
+    private CharacterEntity characterByCharacterNo;
+    private AuthorityEntity authorityByAuhtorityNo;
 
     @Id
     @Column(name = "characterNo")
@@ -36,7 +36,7 @@ public class AuthorityassociationEntity {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        AuthorityassociationEntity that = (AuthorityassociationEntity) o;
+        AuthorityAssociationEntity that = (AuthorityAssociationEntity) o;
         return Objects.equals(characterNo, that.characterNo) &&
                 Objects.equals(auhtorityNo, that.auhtorityNo);
     }
@@ -48,21 +48,21 @@ public class AuthorityassociationEntity {
 
     @ManyToOne
     @JoinColumn(name = "characterNo", referencedColumnName = "characterNo", nullable = false)
-    public CharactertableEntity getCharactertableByCharacterNo() {
-        return charactertableByCharacterNo;
+    public CharacterEntity getCharacterByCharacterNo() {
+        return characterByCharacterNo;
     }
 
-    public void setCharactertableByCharacterNo(CharactertableEntity charactertableByCharacterNo) {
-        this.charactertableByCharacterNo = charactertableByCharacterNo;
+    public void setCharacterByCharacterNo(CharacterEntity charactertableByCharacterNo) {
+        this.characterByCharacterNo = charactertableByCharacterNo;
     }
 
     @ManyToOne
     @JoinColumn(name = "auhtorityNo", referencedColumnName = "auhtorityNo", nullable = false)
-    public AuthoritytableEntity getAuthoritytableByAuhtorityNo() {
-        return authoritytableByAuhtorityNo;
+    public AuthorityEntity getAuthorityByAuhtorityNo() {
+        return authorityByAuhtorityNo;
     }
 
-    public void setAuthoritytableByAuhtorityNo(AuthoritytableEntity authoritytableByAuhtorityNo) {
-        this.authoritytableByAuhtorityNo = authoritytableByAuhtorityNo;
+    public void setAuthorityByAuhtorityNo(AuthorityEntity authoritytableByAuhtorityNo) {
+        this.authorityByAuhtorityNo = authoritytableByAuhtorityNo;
     }
 }

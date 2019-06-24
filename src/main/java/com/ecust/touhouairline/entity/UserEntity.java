@@ -8,24 +8,24 @@ import java.util.Objects;
 @Table(name = "user", schema = "flight", catalog = "")
 public class UserEntity {
   @Id
-  private String username;
+  private String userName;
   private String password;
   private String userPhone;
   private String email;
-  private String nickname;
+  private String nickName;
   private Integer credit;
-  private CharacterassociationEntity characterassociationsByUsername;
-  private Collection<OrdermasterEntity> ordermastersByUsername;
-  private Collection<PassengerEntity> passengersByUsername;
+  private CharacterAssociationEntity characterAssociationsByUserNo;
+  private Collection<OrderMasterEntity> ordermastersByUserNo;
+  private Collection<PassengerEntity> passengersByUserNo;
 
   @Id
   @Column(name = "userNo")
-  public String getUsername() {
-    return username;
+  public String getUserName() {
+    return userName;
   }
 
-  public void setUsername(String username) {
-    this.username = username;
+  public void setUserName(String userName) {
+    this.userName = userName;
   }
 
   @Basic
@@ -60,12 +60,12 @@ public class UserEntity {
 
   @Basic
   @Column(name = "nickName")
-  public String getNickname() {
-    return nickname;
+  public String getNickName() {
+    return nickName;
   }
 
-  public void setNickname(String nickName) {
-    this.nickname = nickName;
+  public void setNickName(String nickName) {
+    this.nickName = nickName;
   }
 
   @Basic
@@ -83,43 +83,43 @@ public class UserEntity {
     if (this == o) return true;
     if (o == null || getClass() != o.getClass()) return false;
     UserEntity that = (UserEntity) o;
-    return Objects.equals(username, that.username) &&
+    return Objects.equals(userName, that.userName) &&
             Objects.equals(password, that.password) &&
             Objects.equals(userPhone, that.userPhone) &&
             Objects.equals(email, that.email) &&
-            Objects.equals(nickname, that.nickname) &&
+            Objects.equals(nickName, that.nickName) &&
             Objects.equals(credit, that.credit);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(username, nickname, password, userPhone, email, credit);
+    return Objects.hash(userName, nickName, password, userPhone, email, credit);
   }
 
   @OneToOne(mappedBy = "userByUserNo")
-  public CharacterassociationEntity getCharacterassociationsByUsername() {
-    return characterassociationsByUsername;
+  public CharacterAssociationEntity getCharacterAssociationsByUserNo() {
+    return characterAssociationsByUserNo;
   }
 
-  public void setCharacterassociationsByUsername(CharacterassociationEntity characterassociationsByUsername) {
-    this.characterassociationsByUsername = characterassociationsByUsername;
-  }
-
-  @OneToMany(mappedBy = "userByUserNo")
-  public Collection<OrdermasterEntity> getOrdermastersByUsername() {
-    return ordermastersByUsername;
-  }
-
-  public void setOrdermastersByUsername(Collection<OrdermasterEntity> ordermastersByUsername) {
-    this.ordermastersByUsername = ordermastersByUsername;
+  public void setCharacterAssociationsByUserNo(CharacterAssociationEntity characterassociationsByUserNo) {
+    this.characterAssociationsByUserNo = characterassociationsByUserNo;
   }
 
   @OneToMany(mappedBy = "userByUserNo")
-  public Collection<PassengerEntity> getPassengersByUsername() {
-    return passengersByUsername;
+  public Collection<OrderMasterEntity> getOrdermastersByUserNo() {
+    return ordermastersByUserNo;
   }
 
-  public void setPassengersByUsername(Collection<PassengerEntity> passengersByUsername) {
-    this.passengersByUsername = passengersByUsername;
+  public void setOrdermastersByUserNo(Collection<OrderMasterEntity> ordermastersByUserNo) {
+    this.ordermastersByUserNo = ordermastersByUserNo;
+  }
+
+  @OneToMany(mappedBy = "userByUserNo")
+  public Collection<PassengerEntity> getPassengersByUserNo() {
+    return passengersByUserNo;
+  }
+
+  public void setPassengersByUserNo(Collection<PassengerEntity> passengersByUserNo) {
+    this.passengersByUserNo = passengersByUserNo;
   }
 }

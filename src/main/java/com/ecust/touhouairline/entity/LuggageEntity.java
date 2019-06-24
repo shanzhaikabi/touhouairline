@@ -10,7 +10,6 @@ public class LuggageEntity {
     private String detailNo;
     private int weight;
     private int shippingFee;
-    private OrderdetailEntity orderdetailByDetailNo;
 
     @Id
     @Column(name = "luggageNo")
@@ -68,13 +67,4 @@ public class LuggageEntity {
         return Objects.hash(luggageNo, detailNo, weight, shippingFee);
     }
 
-    @ManyToOne
-    @JoinColumn(name = "detailNo", referencedColumnName = "detailNo", nullable = false)
-    public OrderdetailEntity getOrderdetailByDetailNo() {
-        return orderdetailByDetailNo;
-    }
-
-    public void setOrderdetailByDetailNo(OrderdetailEntity orderdetailByDetailNo) {
-        this.orderdetailByDetailNo = orderdetailByDetailNo;
-    }
 }

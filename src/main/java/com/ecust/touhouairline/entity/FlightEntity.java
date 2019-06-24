@@ -21,7 +21,7 @@ public class FlightEntity {
     private String flightState;
     private Integer mileage;
     private PlaneEntity planeByPlaneNo;
-    private Collection<OrdermasterEntity> ordermastersByFlightNo;
+    private Collection<OrderMasterEntity> ordermastersByFlightNo;
 
     @Id
     @Column(name = "flightNo")
@@ -178,11 +178,11 @@ public class FlightEntity {
     }
 
     @OneToMany(mappedBy = "flightByFlightNo")
-    public Collection<OrdermasterEntity> getOrdermastersByFlightNo() {
+    public Collection<OrderMasterEntity> getOrdermastersByFlightNo() {
         return ordermastersByFlightNo;
     }
 
-    public void setOrdermastersByFlightNo(Collection<OrdermasterEntity> ordermastersByFlightNo) {
+    public void setOrdermastersByFlightNo(Collection<OrderMasterEntity> ordermastersByFlightNo) {
         this.ordermastersByFlightNo = ordermastersByFlightNo;
     }
 }

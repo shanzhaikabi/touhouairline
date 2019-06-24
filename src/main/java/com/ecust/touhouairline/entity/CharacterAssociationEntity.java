@@ -5,12 +5,12 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "characterassociation", schema = "flight", catalog = "")
-@IdClass(CharacterassociationEntityPK.class)
-public class CharacterassociationEntity {
+@IdClass(CharacterAssociationEntityPK.class)
+public class CharacterAssociationEntity {
     private String userNo;
     private String characterNo;
     private UserEntity userByUserNo;
-    private CharactertableEntity charactertableByCharacterNo;
+    private CharacterEntity characterByCharacterNo;
 
     @Id
     @Column(name = "userNo")
@@ -36,7 +36,7 @@ public class CharacterassociationEntity {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        CharacterassociationEntity that = (CharacterassociationEntity) o;
+        CharacterAssociationEntity that = (CharacterAssociationEntity) o;
         return Objects.equals(userNo, that.userNo) &&
                 Objects.equals(characterNo, that.characterNo);
     }
@@ -58,11 +58,11 @@ public class CharacterassociationEntity {
 
     @ManyToOne
     @JoinColumn(name = "characterNo", referencedColumnName = "characterNo", nullable = false)
-    public CharactertableEntity getCharactertableByCharacterNo() {
-        return charactertableByCharacterNo;
+    public CharacterEntity getCharactertableByCharacterNo() {
+        return characterByCharacterNo;
     }
 
-    public void setCharactertableByCharacterNo(CharactertableEntity charactertableByCharacterNo) {
-        this.charactertableByCharacterNo = charactertableByCharacterNo;
+    public void setCharacterByCharacterNo(CharacterEntity charactertableByCharacterNo) {
+        this.characterByCharacterNo = charactertableByCharacterNo;
     }
 }

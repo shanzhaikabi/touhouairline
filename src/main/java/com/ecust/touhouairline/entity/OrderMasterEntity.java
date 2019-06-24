@@ -7,7 +7,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "ordermaster", schema = "flight", catalog = "")
-public class OrdermasterEntity {
+public class OrderMasterEntity {
     private String orderNo;
     private String flightNo;
     private String userNo;
@@ -16,7 +16,7 @@ public class OrdermasterEntity {
     private int sum;
     private String state;
     private Integer usedCredit;
-    private Collection<OrderdetailEntity> orderdetailsByOrderNo;
+    private Collection<OrderDetailEntity> orderdetailsByOrderNo;
     private FlightEntity flightByFlightNo;
     private UserEntity userByUserNo;
 
@@ -104,7 +104,7 @@ public class OrdermasterEntity {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        OrdermasterEntity that = (OrdermasterEntity) o;
+        OrderMasterEntity that = (OrderMasterEntity) o;
         return sum == that.sum &&
                 Objects.equals(orderNo, that.orderNo) &&
                 Objects.equals(flightNo, that.flightNo) &&
@@ -121,11 +121,11 @@ public class OrdermasterEntity {
     }
 
     @OneToMany(mappedBy = "ordermasterByOrderNo")
-    public Collection<OrderdetailEntity> getOrderdetailsByOrderNo() {
+    public Collection<OrderDetailEntity> getOrderdetailsByOrderNo() {
         return orderdetailsByOrderNo;
     }
 
-    public void setOrderdetailsByOrderNo(Collection<OrderdetailEntity> orderdetailsByOrderNo) {
+    public void setOrderdetailsByOrderNo(Collection<OrderDetailEntity> orderdetailsByOrderNo) {
         this.orderdetailsByOrderNo = orderdetailsByOrderNo;
     }
 

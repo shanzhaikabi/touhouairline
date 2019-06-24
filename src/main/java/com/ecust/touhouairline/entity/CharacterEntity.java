@@ -6,11 +6,10 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "charactertable", schema = "flight", catalog = "")
-public class CharactertableEntity {
+public class CharacterEntity {
     private String characterNo;
     private String characterName;
-    private Collection<AuthorityassociationEntity> authorityassociationsByCharacterNo;
-    private Collection<CharacterassociationEntity> characterassociationsByCharacterNo;
+    private Collection<AuthorityAssociationEntity> authorityAssociationsByCharacterNo;
 
     @Id
     @Column(name = "characterNo")
@@ -36,7 +35,7 @@ public class CharactertableEntity {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        CharactertableEntity that = (CharactertableEntity) o;
+        CharacterEntity that = (CharacterEntity) o;
         return Objects.equals(characterNo, that.characterNo) &&
                 Objects.equals(characterName, that.characterName);
     }
@@ -47,20 +46,12 @@ public class CharactertableEntity {
     }
 
     @OneToMany(mappedBy = "charactertableByCharacterNo")
-    public Collection<AuthorityassociationEntity> getAuthorityassociationsByCharacterNo() {
-        return authorityassociationsByCharacterNo;
+    public Collection<AuthorityAssociationEntity> getAuthorityAssociationsByCharacterNo() {
+        return authorityAssociationsByCharacterNo;
     }
 
-    public void setAuthorityassociationsByCharacterNo(Collection<AuthorityassociationEntity> authorityassociationsByCharacterNo) {
-        this.authorityassociationsByCharacterNo = authorityassociationsByCharacterNo;
+    public void setAuthorityAssociationsByCharacterNo(Collection<AuthorityAssociationEntity> authorityassociationsByCharacterNo) {
+        this.authorityAssociationsByCharacterNo = authorityassociationsByCharacterNo;
     }
 
-    @OneToMany(mappedBy = "charactertableByCharacterNo")
-    public Collection<CharacterassociationEntity> getCharacterassociationsByCharacterNo() {
-        return characterassociationsByCharacterNo;
-    }
-
-    public void setCharacterassociationsByCharacterNo(Collection<CharacterassociationEntity> characterassociationsByCharacterNo) {
-        this.characterassociationsByCharacterNo = characterassociationsByCharacterNo;
-    }
 }

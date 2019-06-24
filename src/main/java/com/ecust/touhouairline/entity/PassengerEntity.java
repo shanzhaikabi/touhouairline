@@ -14,7 +14,6 @@ public class PassengerEntity {
     private String identity;
     private String sex;
     private String passengerPhone;
-    private UserEntity userByUserNo;
 
     @Id
     @Column(name = "passengerNo")
@@ -116,13 +115,4 @@ public class PassengerEntity {
         return Objects.hash(passengerNo, userNo, passengerName, passengerType, passport, identity, sex, passengerPhone);
     }
 
-    @ManyToOne
-    @JoinColumn(name = "userNo", referencedColumnName = "userNo", nullable = false)
-    public UserEntity getUserByUserNo() {
-        return userByUserNo;
-    }
-
-    public void setUserByUserNo(UserEntity userByUserNo) {
-        this.userByUserNo = userByUserNo;
-    }
 }
