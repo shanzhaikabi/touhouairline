@@ -1,6 +1,8 @@
 package com.ecust.touhouairline.entity;
 
-public class UserEntityTmp{
+import java.io.Serializable;
+
+public class UserEntityTmp implements Serializable {
     private UserEntity userEntity;
     private String passwordAgain;
 
@@ -13,6 +15,10 @@ public class UserEntityTmp{
         userEntity.setUserPhone(phone);
         userEntity.setCredit(0);
         this.passwordAgain = passwordAgain;
+    }
+
+    public void setCharacterEntity(CharacterEntity entity){
+        this.userEntity.setCharacterByUserNo(entity);
     }
 
     public String getPasswordAgain() {

@@ -1,15 +1,15 @@
 package com.ecust.touhouairline.entity;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.Collection;
 import java.util.Objects;
 
 @Entity
 @Table(name = "flight", schema = "flight", catalog = "")
-public class FlightEntity {
+public class FlightEntity implements Serializable {
     private String flightNo;
-    //private String planeNo;
     private Timestamp departTime;
     private Timestamp arrivedTime;
     private String departPlace;
@@ -20,8 +20,8 @@ public class FlightEntity {
     private String boardingGate;
     private String flightState;
     private Integer mileage;
+    private String planeNo;
     private PlaneEntity planeByPlaneNo;
-    //private Collection<OrderMasterEntity> ordermastersByFlightNo;
 
     @Id
     @Column(name = "flightno")
@@ -32,17 +32,6 @@ public class FlightEntity {
     public void setFlightNo(String flightNo) {
         this.flightNo = flightNo;
     }
-
-    /*
-    @Basic
-    @Column(name = "planeNo")
-    public String getPlaneNo() {
-        return planeNo;
-    }
-
-    public void setPlaneNo(String planeNo) {
-        this.planeNo = planeNo;
-    }*/
 
     @Basic
     @Column(name = "departtime")
@@ -177,14 +166,13 @@ public class FlightEntity {
     public void setPlaneByPlaneNo(PlaneEntity planeByPlaneNo) {
         this.planeByPlaneNo = planeByPlaneNo;
     }
-    /*
-    @OneToMany(mappedBy = "flightNo")
-    public Collection<OrderMasterEntity> getOrdermastersByFlightNo() {
-        return ordermastersByFlightNo;
+
+    @Transient
+    public String getPlaneNo() {
+        return planeNo;
     }
 
-    public void setOrdermastersByFlightNo(Collection<OrderMasterEntity> ordermastersByFlightNo) {
-        this.ordermastersByFlightNo = ordermastersByFlightNo;
+    public void setPlaneNo(String planeNo) {
+        this.planeNo = planeNo;
     }
-    */
 }

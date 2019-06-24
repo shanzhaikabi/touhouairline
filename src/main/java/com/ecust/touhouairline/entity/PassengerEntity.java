@@ -1,11 +1,12 @@
 package com.ecust.touhouairline.entity;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Objects;
 
 @Entity
 @Table(name = "passenger", schema = "flight", catalog = "")
-public class PassengerEntity {
+public class PassengerEntity implements Serializable {
     private String passengerNo;
     private String userNo;
     private String passengerName;
@@ -16,6 +17,7 @@ public class PassengerEntity {
     private String passengerPhone;
 
     @Id
+    @GeneratedValue
     @Column(name = "passengerno")
     public String getPassengerNo() {
         return passengerNo;

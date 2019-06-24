@@ -1,12 +1,13 @@
 package com.ecust.touhouairline.entity;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.Objects;
 
 @Entity
 @Table(name = "orderdetail", schema = "flight", catalog = "")
-public class OrderDetailEntity {
+public class OrderDetailEntity implements Serializable {
     private String detailNo;
     private String orderNo;
     private String passengerName;
