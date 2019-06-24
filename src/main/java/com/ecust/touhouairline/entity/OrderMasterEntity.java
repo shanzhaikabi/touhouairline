@@ -15,7 +15,7 @@ public class OrderMasterEntity implements Serializable {
     private String ticketClass;
     private int sum;
     private String state;
-    private Integer usedCredit;
+    private int usedCredit;
     private Collection<OrderDetailEntity> orderdetailsByOrderNo;
     private FlightEntity flightByFlightNo;
     private UserEntity userByUserNo;
@@ -83,11 +83,11 @@ public class OrderMasterEntity implements Serializable {
 
     @Basic
     @Column(name = "usedcredit")
-    public Integer getUsedCredit() {
+    public int getUsedCredit() {
         return usedCredit;
     }
 
-    public void setUsedCredit(Integer usedCredit) {
+    public void setUsedCredit(int usedCredit) {
         this.usedCredit = usedCredit;
     }
 
