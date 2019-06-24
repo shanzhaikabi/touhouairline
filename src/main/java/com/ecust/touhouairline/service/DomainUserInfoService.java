@@ -5,10 +5,14 @@ import com.ecust.touhouairline.entity.PassengerEntity;
 import com.ecust.touhouairline.entity.UserEntity;
 import com.ecust.touhouairline.entity.UserEntityTmp;
 import com.ecust.touhouairline.repository.UserRepository;
+import com.ecust.touhouairline.utils.MultiMessageResult;
+import com.ecust.touhouairline.utils.SingleMessageResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 /**
  * @author 姚迟亮
@@ -19,44 +23,61 @@ public class DomainUserInfoService {
     @Autowired
     UserRepository userRepository;
 
-    public String changeUserInfo(UserEntity user, UserEntityTmp result){
+    public SingleMessageResult changeUserInfo(UserEntity user, UserEntityTmp result){
         if (!result.getPassword().isEmpty() || !result.getPasswordAgain().isEmpty()) {
-            if (result.getPassword().length() < 6 || result.getPassword().length() > 33) return "密码长度在6～11位";
-            if (!result.getPassword().equals(result.getPasswordAgain())) return "两次密码不一致";
+            if (result.getPassword().length() < 6 || result.getPassword().length() > 33) new SingleMessageResult(false,DomainUserInfoConsts.USER_CHANGE_SUCCESS);
+            if (!result.getPassword().equals(result.getPasswordAgain())) new SingleMessageResult(false,DomainUserInfoConsts.USER_CHANGE_SUCCESS);
             user.setPassword(result.getPassword());
         }
         if (!result.getNickname().isEmpty()) user.setNickName(result.getNickname());
         if (!result.getEmail().isEmpty()) user.setEmail(result.getEmail());
         if (!result.getPhone().isEmpty()) user.setUserPhone(result.getPhone());
         userRepository.save(user);
-        return DomainUserInfoConsts.USER_CHANGE_SUCCESS;
+        return new SingleMessageResult(true,DomainUserInfoConsts.USER_CHANGE_SUCCESS);
     }
 
     public Collection<PassengerEntity> showPassages(UserEntity user){
         return user.getPassengersByUserNo();
     }
 
-    public String addPassenger(UserEntity user, PassengerEntity passenger){
-        if (passenger.getPassengerName().isEmpty()) return DomainUserInfoConsts.PASSENGER_NAME_ERROR;
-        if (passenger.getPassengerType().isEmpty()) return DomainUserInfoConsts.PASSENGER_TYPE_ERROR;
-        if (passenger.getSex().isEmpty()) return DomainUserInfoConsts.PASSENGER_SEX_ERROR;
-        addPassengerToUser(user,passenger);
-        userRepository.save(user);
-        return DomainUserInfoConsts.PASSENGER_ADD_SUCCESS;
+    public MultiMessageResult addPassenger(UserEntity user, PassengerEntity passenger){
+        Map<String,String> stringMap = new LinkedHashMap();
+        if (passenger.getPassengerName().isEmpty())
+            stringMap.put("passengerNameError",DomainUserInfoConsts.PASSENGER_NAME_ERROR);
+        if (passenger.getPassengerType().isEmpty())
+            stringMap.put("passengerTypeError",DomainUserInfoConsts.PASSENGER_TYPE_ERROR);
+        if (passenger.getSex().isEmpty())
+            stringMap.put("passengerSexError",DomainUserInfoConsts.PASSENGER_SEX_ERROR);
+        if (stringMap.isEmpty()){
+            addPassengerToUser(user,passenger);
+            userRepository.save(user);
+            stringMap.put("success",DomainUserInfoConsts.PASSENGER_ADD_SUCCESS);
+            return new MultiMessageResult(true,stringMap);
+        }
+        return new MultiMessageResult(false,stringMap);
     }
 
-    public String changePassenger(UserEntity user, PassengerEntity passenger){
-        if (passenger.getPassengerName().isEmpty()) return DomainUserInfoConsts.PASSENGER_NAME_ERROR;
-        if (passenger.getPassengerType().isEmpty()) return DomainUserInfoConsts.PASSENGER_TYPE_ERROR;
-        if (passenger.getSex().isEmpty()) return DomainUserInfoConsts.PASSENGER_SEX_ERROR;
-        reloadPassengerToUser(user,passenger);
-        userRepository.save(user);
-        return DomainUserInfoConsts.PASSENGER_CHANGE_SUCCESS;
+    public MultiMessageResult changePassenger(UserEntity user, PassengerEntity passenger){
+        Map<String,String> stringMap = new LinkedHashMap();
+        if (passenger.getPassengerName().isEmpty())
+            stringMap.put("passengerNameError",DomainUserInfoConsts.PASSENGER_NAME_ERROR);
+        if (passenger.getPassengerType().isEmpty())
+            stringMap.put("passengerTypeError",DomainUserInfoConsts.PASSENGER_TYPE_ERROR);
+        if (passenger.getSex().isEmpty())
+            stringMap.put("passengerSexError",DomainUserInfoConsts.PASSENGER_SEX_ERROR);
+        if (stringMap.isEmpty()) {
+            addPassengerToUser(user, passenger);
+            reloadPassengerToUser(user, passenger);
+            userRepository.save(user);
+            stringMap.put("success",DomainUserInfoConsts.PASSENGER_ADD_SUCCESS);
+            return new MultiMessageResult(true,stringMap);
+        }
+        return new MultiMessageResult(false,stringMap);
     }
 
-    public String deletePassenger(UserEntity user, PassengerEntity passenger){
-        if (removePassengerToUser(user,passenger)) return DomainUserInfoConsts.PASSENGER_DELETE_SUCCESS;
-        return DomainUserInfoConsts.PASSENGER_NOT_FOUND_ERROR;
+    public SingleMessageResult deletePassenger(UserEntity user, PassengerEntity passenger){
+        if (removePassengerToUser(user,passenger)) return new SingleMessageResult(true,DomainUserInfoConsts.PASSENGER_DELETE_SUCCESS);
+        return new SingleMessageResult(false,DomainUserInfoConsts.PASSENGER_NOT_FOUND_ERROR);
     }
 
     private void addPassengerToUser(UserEntity user, PassengerEntity passenger){
