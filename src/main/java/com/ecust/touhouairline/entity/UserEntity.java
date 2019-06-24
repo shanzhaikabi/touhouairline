@@ -14,7 +14,7 @@ public class UserEntity {
   private String email;
   private String nickName;
   private Integer credit;
-  private CharacterAssociationEntity characterAssociationsByUserNo;
+  private CharacterEntity characterByUserNo;
   private Collection<OrderMasterEntity> ordermastersByUserNo;
   private Collection<PassengerEntity> passengersByUserNo;
 
@@ -96,16 +96,17 @@ public class UserEntity {
     return Objects.hash(userName, nickName, password, userPhone, email, credit);
   }
 
-  @OneToOne(mappedBy = "userByUserNo")
-  public CharacterAssociationEntity getCharacterAssociationsByUserNo() {
-    return characterAssociationsByUserNo;
+  @ManyToOne
+  @JoinColumn(name = "characterNo", referencedColumnName = "characterNo", nullable = false)
+  public CharacterEntity getCharacterByUserNo() {
+    return characterByUserNo;
   }
 
-  public void setCharacterAssociationsByUserNo(CharacterAssociationEntity characterassociationsByUserNo) {
-    this.characterAssociationsByUserNo = characterassociationsByUserNo;
+  public void setCharacterByUserNo(CharacterEntity characterByUserNo) {
+    this.characterByUserNo = characterByUserNo;
   }
 
-  @OneToMany(mappedBy = "userByUserNo")
+  @OneToMany(mappedBy = "userNo")
   public Collection<OrderMasterEntity> getOrdermastersByUserNo() {
     return ordermastersByUserNo;
   }
@@ -114,7 +115,7 @@ public class UserEntity {
     this.ordermastersByUserNo = ordermastersByUserNo;
   }
 
-  @OneToMany(mappedBy = "userByUserNo")
+  @OneToMany(mappedBy = "userNo")
   public Collection<PassengerEntity> getPassengersByUserNo() {
     return passengersByUserNo;
   }

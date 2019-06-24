@@ -9,7 +9,7 @@ import java.util.Objects;
 public class CharacterEntity {
     private String characterNo;
     private String characterName;
-    private Collection<AuthorityAssociationEntity> authorityAssociationsByCharacterNo;
+    private Collection<AuthorityEntity> authorityByCharacterNo;
 
     @Id
     @Column(name = "characterNo")
@@ -45,13 +45,18 @@ public class CharacterEntity {
         return Objects.hash(characterNo, characterName);
     }
 
-    @OneToMany(mappedBy = "charactertableByCharacterNo")
-    public Collection<AuthorityAssociationEntity> getAuthorityAssociationsByCharacterNo() {
-        return authorityAssociationsByCharacterNo;
+    @ManyToMany
+    @JoinTable(name = "authorityAssociation",joinColumns = {
+            @JoinColumn(name = "characterNo",referencedColumnName = "characterNo")},
+            inverseJoinColumns = {
+            @JoinColumn(name = "authorityNo",referencedColumnName = "authorityNo")
+    })
+    public Collection<AuthorityEntity> getAuthorityByCharacterNo() {
+        return authorityByCharacterNo;
     }
 
-    public void setAuthorityAssociationsByCharacterNo(Collection<AuthorityAssociationEntity> authorityassociationsByCharacterNo) {
-        this.authorityAssociationsByCharacterNo = authorityassociationsByCharacterNo;
+    public void setAuthorityByCharacterNo(Collection<AuthorityEntity> authorityByCharacterNo) {
+        this.authorityByCharacterNo = authorityByCharacterNo;
     }
 
 }

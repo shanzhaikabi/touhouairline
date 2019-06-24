@@ -6,9 +6,9 @@ public class UserEntityTmp{
 
     public UserEntityTmp(String username, String password, String passwordAgain, String email, String phone,String nickname) {
         this.userEntity = new UserEntity();
-        userEntity.setUsername(username);
+        userEntity.setUserName(username);
         userEntity.setPassword(password);
-        userEntity.setNickname(nickname);
+        userEntity.setNickName(nickname);
         userEntity.setEmail(email);
         userEntity.setUserPhone(phone);
         userEntity.setCredit(0);
@@ -20,7 +20,7 @@ public class UserEntityTmp{
     }
 
     public String getUsername(){
-        return userEntity.getUsername();
+        return userEntity.getUserName();
     }
 
     public String getPassword(){
@@ -35,7 +35,7 @@ public class UserEntityTmp{
         return userEntity.getUserPhone();
     }
 
-    public String getNickname() {return userEntity.getNickname();}
+    public String getNickname() {return userEntity.getNickName();}
 
     public UserEntity getUserEntity(){
         return userEntity;

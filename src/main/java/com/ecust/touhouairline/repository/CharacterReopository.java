@@ -1,8 +1,10 @@
 package com.ecust.touhouairline.repository;
 
-import com.ecust.touhouairline.entity.CharactertableEntity;
+import com.ecust.touhouairline.entity.CharacterEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-public interface CharacterReopository extends JpaRepository<CharactertableEntity,String> {
+@Repository
+public interface CharacterReopository extends JpaRepository<CharacterEntity,String> {
 
 }

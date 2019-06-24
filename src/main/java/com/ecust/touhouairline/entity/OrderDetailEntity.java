@@ -31,7 +31,7 @@ public class OrderDetailEntity {
     }
 
     @Basic
-    @Column(name = "orderNo")
+    @Column(name = "orderNo",insertable = false,updatable = false)
     public String getOrderNo() {
         return orderNo;
     }
@@ -142,7 +142,7 @@ public class OrderDetailEntity {
         return Objects.hash(detailNo, orderNo, passengerName, passengerType, identity, passport, phone, fee, state, seat);
     }
 
-    @OneToMany(mappedBy = "orderdetailByDetailNo")
+    @OneToMany(mappedBy = "detailNo")
     public Collection<LuggageEntity> getLuggagesByDetailNo() {
         return luggagesByDetailNo;
     }
