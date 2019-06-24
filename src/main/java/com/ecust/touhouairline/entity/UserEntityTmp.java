@@ -15,6 +15,10 @@ public class UserEntityTmp{
         this.passwordAgain = passwordAgain;
     }
 
+    public void setCharacterEntity(CharacterEntity entity){
+        this.userEntity.setCharacterByUserNo(entity);
+    }
+
     public String getPasswordAgain() {
         return passwordAgain;
     }

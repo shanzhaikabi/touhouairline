@@ -1,6 +1,8 @@
 package com.ecust.touhouairline.service;
 
+import com.ecust.touhouairline.entity.CharacterEntity;
 import com.ecust.touhouairline.entity.UserEntityTmp;
+import com.ecust.touhouairline.repository.CharacterReopository;
 import com.ecust.touhouairline.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,6 +18,9 @@ import java.util.Map;
 public class LoginService {
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private CharacterReopository characterReopository;
 
     /**
      * 客户或管理员登录
@@ -58,6 +63,8 @@ public class LoginService {
     public String register(UserEntityTmp userEntityTmp){
         String checkUser = checkUserWhenRegister(userEntityTmp);
         if (checkUser.equals("yes")){
+            CharacterEntity characterEntity = characterReopository.findByCharacterNo("1");
+            userEntityTmp.setCharacterEntity(characterEntity);
             userRepository.save(userEntityTmp.getUserEntity());
             return "success";
         }
