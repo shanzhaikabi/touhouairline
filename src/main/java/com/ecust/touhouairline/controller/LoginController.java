@@ -7,9 +7,9 @@ import com.ecust.touhouairline.utils.SingleMessageResult;
 import com.fasterxml.jackson.annotation.JsonGetter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 @RestController
 public class LoginController {
@@ -22,13 +22,12 @@ public class LoginController {
         return null;
     }
 
-    @RequestMapping(value = "register",method = RequestMethod.POST)
-    public ModelMap register(String userEntityTmpJson){
+    @PostMapping(value = "register")
+    public ModelMap register(@RequestBody String params){
         ModelMap map = new ModelMap();
-        UserEntityTmp userEntityTmp = JSON.parseObject(userEntityTmpJson,UserEntityTmp.class);
+        UserEntityTmp userEntityTmp = JSON.parseObject(params,UserEntityTmp.class);
         SingleMessageResult result = loginService.register(userEntityTmp);
-        map.put("success",result.isSuccess());
-        map.put("message",result.getMessage());
+        map.put("result",result);
         return map;
     }
 }
