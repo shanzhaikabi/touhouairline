@@ -51,5 +51,6 @@ public class TestController{
         orderDetail.setPassengerName("李霄");
         orderDetail.setPhone("13313331333");
         domainOrderService.createOrder(orderMaster, Arrays.asList(orderDetail));
+        domainOrderService.payOrder(orderMaster);
     }
 }

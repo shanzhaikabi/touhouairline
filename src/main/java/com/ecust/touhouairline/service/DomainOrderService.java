@@ -71,7 +71,9 @@ public class DomainOrderService {
                 sum += singleTicketPrice/ 2;
                 orderDetail.setFee(singleTicketPrice);
             }
+            orderDetail.setOrdermasterByOrderNo(orderMaster);
         }
+        orderMaster.setOrderdetailsByOrderNo(orderDetails);
         orderMasterRepository.save(orderMaster);
         orderDetailRepository.saveAll(orderDetails);
         if(sum != orderMaster.getSum())
