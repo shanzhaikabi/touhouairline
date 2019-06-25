@@ -4,10 +4,11 @@ import com.ecust.touhouairline.consts.LoginConsts;
 import com.ecust.touhouairline.entity.CharacterEntity;
 import com.ecust.touhouairline.entity.UserEntity;
 import com.ecust.touhouairline.entity.UserEntityTmp;
-import com.ecust.touhouairline.repository.CharacterReopository;
+import com.ecust.touhouairline.repository.CharacterRepository;
 import com.ecust.touhouairline.repository.UserRepository;
 import com.ecust.touhouairline.utils.Result;
 import com.ecust.touhouairline.utils.ResultWithSingleMessage;
+import com.ecust.touhouairline.utils.SingleMessageResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,7 +25,7 @@ public class LoginService {
     private UserRepository userRepository;
 
     @Autowired
-    private CharacterReopository characterReopository;
+    private CharacterRepository characterReopository;
 
     /**
      * 客户或管理员登录
@@ -61,25 +62,25 @@ public class LoginService {
      * @param userEntityTmp 封装好的用户信息
      * @return 成功返回success,失败返回失败原因
      */
-    public String register(UserEntityTmp userEntityTmp){
-        String checkUser = checkUserWhenRegister(userEntityTmp);
-        if (checkUser.equals("yes")){
-            CharacterEntity characterEntity = characterReopository.findByCharacterNo("1");
+    public SingleMessageResult register(UserEntityTmp userEntityTmp){
+        SingleMessageResult checkUser = checkUserWhenRegister(userEntityTmp);
+        if (checkUser.isSuccess()){
+            CharacterEntity characterEntity = characterReopository.findByCharacterName("客户");
             userEntityTmp.setCharacterEntity(characterEntity);
             userRepository.save(userEntityTmp.getUserEntity());
-            return "success";
+            return new SingleMessageResult(true,LoginConsts.SUCCESS);
         }
         else return checkUser;
     }
 
-    private String checkUserWhenRegister(UserEntityTmp user){
-        if (userRepository.existsById(user.getUsername())) return "用户名已存在";
-        if (user.getPassword().length() < 6 || user.getPassword().length() > 33) return "密码长度在6～11位";
-        if (!user.getPassword().equals(user.getPasswordAgain())) return "两次密码不一致";
-        if (user.getNickname().isEmpty()) return "昵称不能为空";
-        if (user.getEmail().isEmpty()) return "邮箱不能为空";
-        if (user.getPhone().isEmpty()) return "电话不能为空";
-        return "yes";
+    private SingleMessageResult checkUserWhenRegister(UserEntityTmp user){
+        if (userRepository.existsById(user.getUsername())) return new SingleMessageResult(false,LoginConsts.USERNAME_EXISTS_ERROR);
+        if (user.getPassword().length() < 6 || user.getPassword().length() > 33) new SingleMessageResult(false,LoginConsts.PASSWORD_LENGTH_ERROR);
+        if (!user.getPassword().equals(user.getPasswordAgain())) new SingleMessageResult(false,LoginConsts.PASSWORD_NOT_SAME_ERROR);
+        if (user.getNickname().isEmpty()) new SingleMessageResult(false,LoginConsts.NICKNAME_ERROR);
+        if (user.getEmail().isEmpty()) return new SingleMessageResult(false,LoginConsts.EMAIL_ERROR);
+        if (user.getPhone().isEmpty()) new SingleMessageResult(false,LoginConsts.PHONE_ERROR);
+        return new SingleMessageResult(true,null);
     }
 
 }

@@ -1,18 +1,24 @@
 package com.ecust.touhouairline.service;
 
 import com.ecust.touhouairline.consts.DomainOrderConsts;
+import com.ecust.touhouairline.consts.OrderDetailConsts;
 import com.ecust.touhouairline.consts.OrderMasterConsts;
+import com.ecust.touhouairline.entity.FlightEntity;
 import com.ecust.touhouairline.entity.OrderDetailEntity;
 import com.ecust.touhouairline.entity.OrderMasterEntity;
 import com.ecust.touhouairline.entity.UserEntity;
+import com.ecust.touhouairline.repository.FlightRepository;
 import com.ecust.touhouairline.repository.OrderDetailRepository;
 import com.ecust.touhouairline.repository.OrderMasterRepository;
 import com.ecust.touhouairline.repository.UserRepository;
 import com.ecust.touhouairline.utils.Result;
 import com.ecust.touhouairline.utils.ResultWithSingleMessage;
+import com.ecust.touhouairline.utils.SingleMessageResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.xml.crypto.dom.DOMCryptoContext;
+import java.sql.Date;
 import java.util.Arrays;
 import java.util.Collection;
 
@@ -28,6 +34,8 @@ public class DomainOrderService {
     private OrderDetailRepository orderDetailRepository;
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private FlightRepository flightRepository;
     /**
      * 显示订单详情
      * @param orderMaster 订单
@@ -36,14 +44,49 @@ public class DomainOrderService {
     public Result<Collection<OrderDetailEntity>> showOrderDetail(OrderMasterEntity orderMaster){
         return new Result<>(true,orderMaster.getOrderdetailsByOrderNo());
     }
-    public void createOrder(){}
+
+    /**
+     *
+     * @param orderMaster 订单，应当包含下单用户、航班、舱位
+     * @param orderDetails 订单详情，应当包含乘客的信息，座位号可空
+     * @return 一条消息 是否成功
+     */
+    public SingleMessageResult createOrder(OrderMasterEntity orderMaster, Collection<OrderDetailEntity> orderDetails){
+        orderMaster.setState(OrderMasterConsts.UNPAID);
+        orderMaster.setOrderDate(new Date(new java.util.Date().getTime()));
+        int sum = 0;
+        String ticketClass = orderMaster.getTicketClass();
+        int singleTicketPrice = 0;
+        if(ticketClass.equals(OrderMasterConsts.ECONOMY_CLASS)){
+            singleTicketPrice = orderMaster.getFlightByFlightNo().getEconomyPrice();
+        }
+        System.out.println(singleTicketPrice);
+        for(OrderDetailEntity orderDetail : orderDetails){
+            orderDetail.setState(OrderDetailConsts.BEFORE_CHECK_IN);
+            if(orderDetail.getPassengerType().equals(OrderDetailConsts.ADULT)) {
+                sum += singleTicketPrice;
+                orderDetail.setFee(singleTicketPrice);
+            }
+            else{
+                sum += singleTicketPrice/ 2;
+                orderDetail.setFee(singleTicketPrice);
+            }
+            orderDetail.setOrdermasterByOrderNo(orderMaster);
+        }
+        orderMaster.setOrderdetailsByOrderNo(orderDetails);
+        orderMasterRepository.save(orderMaster);
+        orderDetailRepository.saveAll(orderDetails);
+        if(sum != orderMaster.getSum())
+            return new SingleMessageResult(false,DomainOrderConsts.MONEY_NOT_MATCH_ERROR);
+        return new SingleMessageResult(true, DomainOrderConsts.CREATE_SUCCESS);
+    }
 
     /**
      *
      * @param orderMaster 订单实体
      * @return 订单退款金额和积分
      */
-    public ResultWithSingleMessage<Collection<String>> deleteOrder(OrderMasterEntity orderMaster){
+    public ResultWithSingleMessage<Collection<String>> cancelOrder(OrderMasterEntity orderMaster){
         orderMaster.setState(OrderMasterConsts.CANCELLED);
         //取消订单应退钱款和积分
         int returnMoney = orderMaster.getSum();
@@ -78,11 +121,11 @@ public class DomainOrderService {
 
     /**
      *
-     * @param orderMaster
-     * @return
+     * @param orderMaster 接受需要付款的订单
+     * @return 如果成功返回支付的金额和积分，否则返回失败信息
      */
     public ResultWithSingleMessage<Collection<String>> payOrder(OrderMasterEntity orderMaster){
-        if(orderMaster.getState() == OrderMasterConsts.UNPAID){
+        if(orderMaster.getState().equals(OrderMasterConsts.UNPAID)){
             //积分不够 应当转移至创建订单
             /*if(creditsUsed > orderMaster.getUserByUserNo().getCredit()){
                 return new ResultWithSingleMessage<>(false,null,DomainOrderConsts.CREDIT_NOT_ENOUGH);
@@ -97,5 +140,19 @@ public class DomainOrderService {
         else {
             return new ResultWithSingleMessage<>(false,null,DomainOrderConsts.ERROR);
         }
+    }
+
+    /**
+     * 通过航班获取所有包括该航班的订单
+     * @param flightNo 航班号
+     * @return 订单集合
+     */
+    public Result<Collection<OrderMasterEntity>> getOrderMasterByFlight(String flightNo){
+        FlightEntity flightEntity = flightRepository.getOne(flightNo);
+        Collection<OrderMasterEntity> orderMasterEntities = orderMasterRepository.findAllByFlightByFlightNoAndStateIsNotIn(
+                flightEntity,
+                Arrays.asList(OrderMasterConsts.CANCELLED,OrderMasterConsts.CHANGED,OrderMasterConsts.FINISHED)
+        );
+        return new Result<>(!orderMasterEntities.isEmpty(),orderMasterEntities);
     }
 }

@@ -43,6 +43,8 @@ public class TestLogin {
         map.put("result",loginService.Login((String) params.get("username"),(String)params.get("password"),true));
         return map;
     }
+
+
     class TestClass implements Serializable {
         int x;
         String y;

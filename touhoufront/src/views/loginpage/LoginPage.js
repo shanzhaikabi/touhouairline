@@ -40,15 +40,13 @@ class LoginPage extends React.Component {
     const usn = this.state.username;
     const pwd = this.state.password;
     const props = this.props;
-    axios.post('home', {
+    axios.post('login', {
       username: usn,
       password: pwd
     })
       .then(function (response) {
         let data = response.data.result;
         if (data.success == true) {
-          console.log(data.object);
-          console.log(data);
           props.changeLoginStatus(true, data.object.userName, data.object.nickName);
         }
       })
@@ -66,4 +64,5 @@ class LoginPage extends React.Component {
     );
   }
 }
+
 export default LoginPage;
