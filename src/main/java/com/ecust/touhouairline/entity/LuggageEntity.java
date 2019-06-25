@@ -14,6 +14,7 @@ public class LuggageEntity implements Serializable {
 
     @Id
     @Column(name = "luggageno")
+    @GeneratedValue
     public String getLuggageNo() {
         return luggageNo;
     }

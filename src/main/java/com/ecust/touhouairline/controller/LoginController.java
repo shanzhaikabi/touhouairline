@@ -1,5 +1,6 @@
 package com.ecust.touhouairline.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.ecust.touhouairline.entity.UserEntityTmp;
 import com.ecust.touhouairline.service.LoginService;
 import com.ecust.touhouairline.utils.SingleMessageResult;
@@ -24,6 +25,10 @@ public class LoginController {
     @RequestMapping(value = "register",method = RequestMethod.POST)
     public ModelMap register(String userEntityTmpJson){
         ModelMap map = new ModelMap();
+        UserEntityTmp userEntityTmp = JSON.parseObject(userEntityTmpJson,UserEntityTmp.class);
+        SingleMessageResult result = loginService.register(userEntityTmp);
+        map.put("success",result.isSuccess());
+        map.put("message",result.getMessage());
         return map;
     }
 }

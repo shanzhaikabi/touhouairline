@@ -22,6 +22,7 @@ public class OrderMasterEntity implements Serializable {
 
     @Id
     @Column(name = "orderno")
+    @GeneratedValue
     public int getOrderNo() {
         return orderNo;
     }

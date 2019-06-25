@@ -7,7 +7,7 @@ import java.util.Objects;
 @Entity
 @Table(name = "passenger", schema = "flight", catalog = "")
 public class PassengerEntity implements Serializable {
-    private String passengerNo;
+    private int passengerNo;
     private String userNo;
     private String passengerName;
     private String passengerType;
@@ -19,11 +19,11 @@ public class PassengerEntity implements Serializable {
     @Id
     @GeneratedValue
     @Column(name = "passengerno")
-    public String getPassengerNo() {
+    public int getPassengerNo() {
         return passengerNo;
     }
 
-    public void setPassengerNo(String passengerNo) {
+    public void setPassengerNo(int passengerNo) {
         this.passengerNo = passengerNo;
     }
 
