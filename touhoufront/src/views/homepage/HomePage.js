@@ -14,11 +14,22 @@ import {
 } from 'react-axios';
 import { Button } from 'office-ui-fabric-react';
 
+import '../../App.css';
+
 class HomePage extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      username: "123",
+      password: "132",
+      loginStatus: false
+    };
+  }
+
   gotoHomePage() {
     axios.post('home', {
       params: {
-        id:'12345'
+        id: "pwd"
       }
     })
       .then(function (response) {
@@ -26,13 +37,27 @@ class HomePage extends React.Component {
         console.log(response.data);
       })
   }
+
+  handleClick = () => {
+    const pwd = this.state.password;
+    axios.post('home', {
+      params: {
+        id: pwd
+      }
+    })
+      .then(function (response) {
+        console.log(response);
+        console.log(response.data);
+      })
+  }
+
   render() {
     return (
       <div>
         <Button
           text="首页"
           ariaDescription="前往首页"
-          onClick={this.gotoHomePage}
+          onClick={this.handleClick}
         />
         <Button
           text="GayHub"

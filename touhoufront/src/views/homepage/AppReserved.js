@@ -27,7 +27,7 @@ class AppReserved extends React.Component {
           3 To get started, edit <code>src/App.js</code> and save to reload.
         </p>
         <div>
-          <Get url="test" params={{ id: "12345" }}>
+          <Get url="test" params={{ id: "12345", dd:"12345" }}>
             {(error, response, isLoading, onReload) => {
               if (error) {
                 return (<div>Something bad happened: {error.message} <button onClick={() => onReload({ params: { reload: true } })}>Retry</button></div>)

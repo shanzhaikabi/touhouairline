@@ -28,7 +28,7 @@ public class TestLogin {
         else map.put("result", (new TestClass(110,"110")));
         return map;
     }
-    @RequestMapping(value="home",method = RequestMethod.GET)
+    @RequestMapping(value="home",method = RequestMethod.POST)
     public ModelMap testFabric(String id){
         System.out.println("114514");
         ModelMap map = new ModelMap();

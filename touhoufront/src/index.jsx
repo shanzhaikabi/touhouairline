@@ -16,7 +16,6 @@ ReactDOM.render(
       <Switch>
         <Route path={["/touhouairline_Web_exploded/home"]} component={HomePage} />
         <Route path={["/touhouairline_Web_exploded/login"]} component={LoginPage} />
-        <Route path={["/touhouairline_Web_exploded"]} component={App} />
       </Switch>
     </Router>
 
