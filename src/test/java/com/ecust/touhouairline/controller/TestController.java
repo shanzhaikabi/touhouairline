@@ -2,7 +2,7 @@ package com.ecust.touhouairline.controller;
 
 import com.ecust.touhouairline.entity.FlightEntity;
 import com.ecust.touhouairline.repository.FlightRepository;
-import com.ecust.touhouairline.service.QueryFlightService;
+import com.ecust.touhouairline.service.CreateBoardingPassService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,12 +14,11 @@ import org.springframework.test.context.junit4.SpringRunner;
 @SpringBootTest
 public class TestController{
     @Autowired
-    private QueryFlightService queryFlightService;
+    private CreateBoardingPassService createBoardingPassService;
     @Autowired
     private FlightRepository flightRepository;
     @Test
-    public void queryFlightTest(){
-        FlightEntity flightEntity = flightRepository.findAll().get(0);
-        queryFlightService.showDetailByFlight(flightEntity);
+    public void CreateBoardingPassServiceTest(){
+        System.out.println(createBoardingPassService.checkPassengerInfo("1", "护照", "EA4444444").getMessage());
     }
 }
