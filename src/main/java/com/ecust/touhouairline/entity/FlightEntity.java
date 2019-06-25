@@ -19,6 +19,7 @@ public class FlightEntity implements Serializable {
     private int firstPrice;
     private String boardingGate;
     private String flightState;
+    //里程
     private Integer mileage;
     private String planeNo;
     private PlaneEntity planeByPlaneNo;

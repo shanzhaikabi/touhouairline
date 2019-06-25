@@ -6,6 +6,7 @@ import com.ecust.touhouairline.entity.FlightEntity;
 import com.ecust.touhouairline.entity.OrderDetailEntity;
 import com.ecust.touhouairline.entity.OrderMasterEntity;
 import com.ecust.touhouairline.entity.UserEntity;
+import com.ecust.touhouairline.repository.FlightRepository;
 import com.ecust.touhouairline.repository.OrderDetailRepository;
 import com.ecust.touhouairline.repository.OrderMasterRepository;
 import com.ecust.touhouairline.repository.UserRepository;
@@ -30,6 +31,8 @@ public class DomainOrderService {
     private OrderDetailRepository orderDetailRepository;
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private FlightRepository flightRepository;
     /**
      * 显示订单详情
      * @param orderMaster 订单
@@ -108,8 +111,9 @@ public class DomainOrderService {
      * @return 订单集合
      */
     public Result<Collection<OrderMasterEntity>> getOrderMasterByFlight(String flightNo){
-        Collection<OrderMasterEntity> orderMasterEntities = orderMasterRepository.findAllByFlightNoAndStateIsNotIn(
-                flightNo,
+        FlightEntity flightEntity = flightRepository.getOne(flightNo);
+        Collection<OrderMasterEntity> orderMasterEntities = orderMasterRepository.findAllByFlightByFlightNoAndStateIsNotIn(
+                flightEntity,
                 Arrays.asList(OrderMasterConsts.CANCELLED,OrderMasterConsts.CHANGED,OrderMasterConsts.FINISHED)
         );
         return new Result<>(!orderMasterEntities.isEmpty(),orderMasterEntities);

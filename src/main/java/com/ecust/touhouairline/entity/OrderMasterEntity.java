@@ -111,7 +111,7 @@ public class OrderMasterEntity implements Serializable {
         return Objects.hash(orderNo, /*flightNo,*/ userNo, orderDate, ticketClass, sum, state, usedCredit);
     }
 
-    @OneToMany(mappedBy = "orderNo")
+    @OneToMany(mappedBy = "orderNo",fetch = FetchType.EAGER)
     public Collection<OrderDetailEntity> getOrderdetailsByOrderNo() {
         return orderdetailsByOrderNo;
     }
