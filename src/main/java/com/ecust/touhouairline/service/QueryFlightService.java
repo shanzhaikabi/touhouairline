@@ -39,7 +39,7 @@ public class QueryFlightService {
      * @param departPlace 出发地点
      * @param destination 到达地点
      * @param passengerNum 乘客数量
-     * @return
+     * @return 返回出发当天的航班列表
      */
     public Result<Collection<FlightEntity>> queryOneWayTicket(
             Timestamp departTime, String departPlace, String destination, int passengerNum){
@@ -54,12 +54,19 @@ public class QueryFlightService {
         return new Result<>(!flights.isEmpty(),flights);
     }
 
+    /**
+     * 显示航班详情
+     * @param flight 航班实体
+     * @return 三种舱位的位置数量
+     */
     public Result<Map<String,Integer>> showDetailByFlight(FlightEntity flight){
         PlaneEntity plane = flight.getPlaneByPlaneNo();
+        //获取三种舱位的最大数量
         int economy = plane.getEconomyClass();
         int premium = plane.getPremiumClass();
         int first = plane.getFirstClass();
         List<OrderMasterEntity> orderMasters = orderMasterRepository.findAllByFlightByFlightNo(flight);
+        //减去已经预定好的位置
         for(OrderMasterEntity orderMaster : orderMasters){
             if(orderMaster.getTicketClass().equals(OrderMasterConsts.ECONOMY_CLASS)){
                 economy -= orderMaster.getOrderdetailsByOrderNo().size();
@@ -75,8 +82,6 @@ public class QueryFlightService {
         map.put(OrderMasterConsts.ECONOMY_CLASS,economy);
         map.put(OrderMasterConsts.PREMIUM_CLASS,premium);
         map.put(OrderMasterConsts.FIRST_CLASS,first);
-        System.out.println(economy);
-
         return new Result<>(true,map);
     }
 }
