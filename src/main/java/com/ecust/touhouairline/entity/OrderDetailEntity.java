@@ -8,8 +8,8 @@ import java.util.Objects;
 @Entity
 @Table(name = "orderdetail", schema = "flight", catalog = "")
 public class OrderDetailEntity implements Serializable {
-    private String detailNo;
-    private String orderNo;
+    private Integer detailNo;
+    private Integer orderNo;
     private String passengerName;
     private String passengerType;
     private String identity;
@@ -24,21 +24,22 @@ public class OrderDetailEntity implements Serializable {
 
     @Id
     @Column(name = "detailno")
-    public String getDetailNo() {
+    @GeneratedValue
+    public Integer getDetailNo() {
         return detailNo;
     }
 
-    public void setDetailNo(String detailNo) {
+    public void setDetailNo(Integer detailNo) {
         this.detailNo = detailNo;
     }
 
     @Basic
     @Column(name = "orderno",insertable = false,updatable = false)
-    public String getOrderNo() {
+    public Integer getOrderNo() {
         return orderNo;
     }
 
-    public void setOrderNo(String orderNo) {
+    public void setOrderNo(Integer orderNo) {
         this.orderNo = orderNo;
     }
 

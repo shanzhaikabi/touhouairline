@@ -9,24 +9,25 @@ import java.util.Objects;
 @Entity
 @Table(name = "ordermaster", schema = "flight", catalog = "")
 public class OrderMasterEntity implements Serializable {
-    private String orderNo;
+    private Integer orderNo;
     private String userNo;
     private Date orderDate;
     private String ticketClass;
     private int sum;
     private String state;
-    private Integer usedCredit;
+    private int usedCredit;
     private Collection<OrderDetailEntity> orderdetailsByOrderNo;
     private FlightEntity flightByFlightNo;
     private UserEntity userByUserNo;
 
     @Id
     @Column(name = "orderno")
-    public String getOrderNo() {
+    @GeneratedValue
+    public Integer getOrderNo() {
         return orderNo;
     }
 
-    public void setOrderNo(String orderNo) {
+    public void setOrderNo(Integer orderNo) {
         this.orderNo = orderNo;
     }
 
@@ -83,11 +84,11 @@ public class OrderMasterEntity implements Serializable {
 
     @Basic
     @Column(name = "usedcredit")
-    public Integer getUsedCredit() {
+    public int getUsedCredit() {
         return usedCredit;
     }
 
-    public void setUsedCredit(Integer usedCredit) {
+    public void setUsedCredit(int usedCredit) {
         this.usedCredit = usedCredit;
     }
 
@@ -111,7 +112,7 @@ public class OrderMasterEntity implements Serializable {
         return Objects.hash(orderNo, /*flightNo,*/ userNo, orderDate, ticketClass, sum, state, usedCredit);
     }
 
-    @OneToMany(mappedBy = "orderNo")
+    @OneToMany(mappedBy = "orderNo",fetch = FetchType.EAGER)
     public Collection<OrderDetailEntity> getOrderdetailsByOrderNo() {
         return orderdetailsByOrderNo;
     }

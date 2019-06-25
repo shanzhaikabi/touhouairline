@@ -7,28 +7,29 @@ import java.util.Objects;
 @Entity
 @Table(name = "luggage", schema = "flight", catalog = "")
 public class LuggageEntity implements Serializable {
-    private String luggageNo;
-    private String detailNo;
+    private Integer luggageNo;
+    private Integer detailNo;
     private int weight;
     private int shippingFee;
 
     @Id
     @Column(name = "luggageno")
-    public String getLuggageNo() {
+    @GeneratedValue
+    public Integer getLuggageNo() {
         return luggageNo;
     }
 
-    public void setLuggageNo(String luggageNo) {
+    public void setLuggageNo(Integer luggageNo) {
         this.luggageNo = luggageNo;
     }
 
     @Basic
     @Column(name = "detailno")
-    public String getDetailNo() {
+    public Integer getDetailNo() {
         return detailNo;
     }
 
-    public void setDetailNo(String detailNo) {
+    public void setDetailNo(Integer detailNo) {
         this.detailNo = detailNo;
     }
 

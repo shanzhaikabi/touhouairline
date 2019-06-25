@@ -1,11 +1,13 @@
 package com.ecust.touhouairline.service;
 
-import com.ecust.touhouairline.entity.CharacterEntity;
 import com.ecust.touhouairline.consts.LoginConsts;
+import com.ecust.touhouairline.entity.CharacterEntity;
 import com.ecust.touhouairline.entity.UserEntity;
 import com.ecust.touhouairline.entity.UserEntityTmp;
 import com.ecust.touhouairline.repository.CharacterRepository;
 import com.ecust.touhouairline.repository.UserRepository;
+import com.ecust.touhouairline.utils.Result;
+import com.ecust.touhouairline.utils.ResultWithSingleMessage;
 import com.ecust.touhouairline.utils.SingleMessageResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,23 +35,23 @@ public class LoginService {
      *                   如果是管理员登陆则为false
      * @return 成功返回Success，失败返回"用户名或密码错误"
      */
-    public String Login(String AccountName,String Password,boolean isCustomer){
+    public ResultWithSingleMessage<UserEntity> Login(String AccountName, String Password, boolean isCustomer){
         UserEntity user = userRepository.findByUserNameAndPassword(AccountName,Password);
         if(user == null){
-            return LoginConsts.LOGIN_ERROR;
+            return new ResultWithSingleMessage<>(false, null, LoginConsts.LOGIN_ERROR);
         }
         else{
             //如果是客户登录且账户类型确实是客户则返回登录成功
             if(isCustomer && user.getCharacterByUserNo().getCharacterName().equals("客户")){
-                return LoginConsts.SUCCESS;
+                return new ResultWithSingleMessage<>(true, user, LoginConsts.SUCCESS);
             }
             //如果管理端登录且账户类型不为客户也返回成功
             else if(!isCustomer && !user.getCharacterByUserNo().getCharacterName().equals("客户")){
-                return LoginConsts.SUCCESS;
+                return new ResultWithSingleMessage<>(true, user, LoginConsts.SUCCESS);
             }
             //否则是客户登录管理员账户或管理员登陆客户账户，返回登录失败
             else{
-                return LoginConsts.LOGIN_ERROR;
+                return new ResultWithSingleMessage<>(false,null,LoginConsts.LOGIN_ERROR);
             }
         }
     }

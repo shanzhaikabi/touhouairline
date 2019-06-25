@@ -15,7 +15,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
- * @author 姚迟亮
+ * @author 李霄
  * 创建日期：2019-6-19
  **/
 @Service
@@ -86,7 +86,7 @@ public class DomainUserInfoService {
 
     private void reloadPassengerToUser(UserEntity user, PassengerEntity passenger){
         for (PassengerEntity passengerEntity : user.getPassengersByUserNo()) {
-            if (passengerEntity.getPassengerNo().equals(passenger.getPassengerNo())){
+            if (passengerEntity.getPassengerNo() == passenger.getPassengerNo()){
                 user.getPassengersByUserNo().remove(passengerEntity);
                 user.getPassengersByUserNo().add(passenger);
                 return;
@@ -97,7 +97,7 @@ public class DomainUserInfoService {
 
     private boolean removePassengerToUser(UserEntity user, PassengerEntity passenger){
         for (PassengerEntity passengerEntity : user.getPassengersByUserNo()) {
-            if (passengerEntity.getPassengerNo().equals(passenger.getPassengerNo())){
+            if (passengerEntity.getPassengerNo() == passenger.getPassengerNo()){
                 user.getPassengersByUserNo().remove(passengerEntity);
                 return true;
             }
