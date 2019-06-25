@@ -9,7 +9,7 @@ import java.util.Objects;
 @Entity
 @Table(name = "ordermaster", schema = "flight", catalog = "")
 public class OrderMasterEntity implements Serializable {
-    private int orderNo;
+    private Integer orderNo;
     private String userNo;
     private Date orderDate;
     private String ticketClass;
@@ -23,11 +23,11 @@ public class OrderMasterEntity implements Serializable {
     @Id
     @Column(name = "orderno")
     @GeneratedValue
-    public int getOrderNo() {
+    public Integer getOrderNo() {
         return orderNo;
     }
 
-    public void setOrderNo(int orderNo) {
+    public void setOrderNo(Integer orderNo) {
         this.orderNo = orderNo;
     }
 
