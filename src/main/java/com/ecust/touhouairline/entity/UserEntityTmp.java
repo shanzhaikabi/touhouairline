@@ -6,7 +6,7 @@ public class UserEntityTmp implements Serializable {
     private UserEntity userEntity;
     private String passwordAgain;
 
-    public UserEntityTmp(String username, String password, String passwordAgain, String email, String phone,String nickname) {
+    public UserEntityTmp(String username, String password, String passwordAgain, String email, String phone, String nickname) {
         this.userEntity = new UserEntity();
         userEntity.setUserName(username);
         userEntity.setPassword(password);
@@ -45,5 +45,13 @@ public class UserEntityTmp implements Serializable {
 
     public UserEntity getUserEntity(){
         return userEntity;
+    }
+
+    @Override
+    public String toString() {
+        return "UserEntityTmp{" +
+                "userEntity=" + userEntity +
+                ", passwordAgain='" + passwordAgain + '\'' +
+                '}';
     }
 }
