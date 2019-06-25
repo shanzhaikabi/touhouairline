@@ -16,6 +16,7 @@ public class OrderDetailEntity implements Serializable {
     private String passport;
     private String phone;
     private Integer fee;
+    //是否已取票
     private String state;
     private Integer seat;
     private Collection<LuggageEntity> luggagesByDetailNo;

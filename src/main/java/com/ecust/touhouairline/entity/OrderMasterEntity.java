@@ -10,7 +10,6 @@ import java.util.Objects;
 @Table(name = "ordermaster", schema = "flight", catalog = "")
 public class OrderMasterEntity implements Serializable {
     private String orderNo;
-    //private String flightNo;
     private String userNo;
     private Date orderDate;
     private String ticketClass;
@@ -30,16 +29,7 @@ public class OrderMasterEntity implements Serializable {
     public void setOrderNo(String orderNo) {
         this.orderNo = orderNo;
     }
-    /*
-    @Basic
-    @Column(name = "flightNo")
-    public String getFlightNo() {
-        return flightNo;
-    }
 
-    public void setFlightNo(String flightNo) {
-        this.flightNo = flightNo;
-    }*/
 
     @Basic
     @Column(name = "userno",insertable = false,updatable = false)
