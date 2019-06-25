@@ -3,10 +3,7 @@ target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**
 !**/src/test/**
-impl/
-
-### FRONT ###
-touhoufront/node_modules
+touhoufront/
 
 ### STS ###
 .apt_generated
@@ -23,6 +20,7 @@ out
 *.iws
 *.iml
 *.ipr
+classes
 
 ### NetBeans ###
 /nbproject/private/

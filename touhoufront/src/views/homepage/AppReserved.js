@@ -1,16 +1,16 @@
 /* eslint-disable */
 import React from 'react';
 import axios from 'axios';
-import { 
-  AxiosProvider, 
-  Request, 
-  Get, 
-  Delete, 
-  Head, 
+import {
+  AxiosProvider,
+  Request,
+  Get,
+  Delete,
+  Head,
   Post,
-  Put, 
-  Patch, 
-  withAxios 
+  Put,
+  Patch,
+  withAxios
 } from 'react-axios';
 import logo from './logo.svg';
 import './App.css';
@@ -27,7 +27,7 @@ class AppReserved extends React.Component {
           3 To get started, edit <code>src/App.js</code> and save to reload.
         </p>
         <div>
-          <Get url="test" params={{ id: "12345", dd:"12345" }}>
+          <Get url="test" params={{ id: "12345", dd: "12345" }}>
             {(error, response, isLoading, onReload) => {
               if (error) {
                 return (<div>Something bad happened: {error.message} <button onClick={() => onReload({ params: { reload: true } })}>Retry</button></div>)

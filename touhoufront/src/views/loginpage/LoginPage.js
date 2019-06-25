@@ -23,10 +23,10 @@ class LoginPage extends React.Component {
     super(props);
     this.state = {
       username: "",
-      password: "",
-      loginStatus: false
+      password: ""
     };
   }
+
 
   handleInputChange = (name, value) => {
     console.log(value);
@@ -34,18 +34,23 @@ class LoginPage extends React.Component {
       [name]: value
     });
   }
-  
+
   handleClick = () => {
+    const state = this.state;
     const usn = this.state.username;
     const pwd = this.state.password;
+    const props = this.props;
     axios.post('home', {
-      params: {
-        username: usn,
-        password: pwd
-      }
+      username: usn,
+      password: pwd
     })
-    .then(function (response) {
-        console.log(response.data);
+      .then(function (response) {
+        let data = response.data.result;
+        if (data.success == true) {
+          console.log(data.object);
+          console.log(data);
+          props.changeLoginStatus(true, data.object.userName, data.object.nickName);
+        }
       })
   }
 
