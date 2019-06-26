@@ -19,6 +19,6 @@ public class TestController{
     private FlightRepository flightRepository;
     @Test
     public void CreateBoardingPassServiceTest(){
-        System.out.println(createBoardingPassService.getBoardingPassInfo("1", "护照", "EA4444444").getObject().get("departTime"));
+        System.out.println(createBoardingPassService.luggageShipping(1,51).getMessage());
     }
 }
