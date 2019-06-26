@@ -3,29 +3,19 @@ import React from 'react';
 import {
   Link
 } from 'react-router-dom';
-import axios from 'axios';
 import {
-  AxiosProvider,
-  Request,
-  Get,
-  Delete,
-  Head,
-  Post,
-  Put,
-  Patch,
-  withAxios
-} from 'react-axios';
-import {
-  Button, DefaultButton, Label
-} from 'office-ui-fabric-react';
+  Button, Row, Col, Layout, Menu
+} from 'antd';
+const { Header, Footer, Sider, Content } = Layout;
+import 'antd/dist/antd.css';
 
 import LoginPage from './views/loginpage/LoginPage';
 import RegisterPage from './views/loginpage/RegisterPage';
 import './App.css';
 
 const pageList = {
-  register:'register',
-  home:'home',
+  register: 'register',
+  home: 'home',
   login: 'login'
 }
 
@@ -42,24 +32,23 @@ export default class App extends React.Component {
   }
 
   getPage() {
-    switch(this.state.pageName)
-    {
+    switch (this.state.pageName) {
       case pageList.register:
         return (<RegisterPage />);
     }
   }
 
-  changeLoginStatus(val,usr,nic) {
+  changeLoginStatus(val, usr, nic) {
     this.setState({
-      loginStatus:val,
-      userName:usr,
-      nickName:nic
+      loginStatus: val,
+      userName: usr,
+      nickName: nic
     });
   }
 
   gotoLogin() {
     this.setState({
-      showLoginPart:true,
+      showLoginPart: true,
       pageName: pageList.login
     });
   }
@@ -80,84 +69,70 @@ export default class App extends React.Component {
   }
 
   render() {
-    let TitleButtonStyle = {
-      borderWidth: '0px',
-      borderRadius: '0px',
-      whiteSpace: 'nowrap',
-      float: 'left',
-      listStyle: 'none'
-    }
-    let TitleDivStyle = {
-      height: '40px'
-    }
-    let NavDivStyle = {
-      height: '80px'
-    }
     let TitleLoginStyle = {
-      fontSize: '10px',
-      float: 'right',
+      fontSize: '12px',
+      display: 'inline',
       listStyle: 'none'
     }
 
     const loginTitle = this.state.loginStatus
       ? (
-        <ul style={TitleLoginStyle}>
-          <li style={TitleLoginStyle}>尊敬的{this.state.nickName},欢迎您登录！</li>
-          <li style={TitleLoginStyle}><Label style={TitleLoginStyle}>|</Label></li>
-          <li style={TitleLoginStyle}><Label style={TitleLoginStyle} onClick={()=>this.checkout()}>登出</Label></li>
-        </ul>
+        <div>尊敬的{this.state.nickName},欢迎您登录！</div>
       )
       : (
         <ul style={TitleLoginStyle}>
-          <li style={TitleLoginStyle}><Label style={TitleLoginStyle} onClick={()=>this.setState({pageName: pageList.register})}>注册</Label></li>
-          <li style={TitleLoginStyle}><Label style={TitleLoginStyle}>|</Label></li>
-          <li style={TitleLoginStyle}><Label style={TitleLoginStyle} onClick={()=>this.gotoLogin()}>登录</Label></li>
+          <li style={TitleLoginStyle} onClick={() => this.setState({ pageName: pageList.register })} success={()=>this.gotoLogin()}>注册</li>
+          <li style={TitleLoginStyle} onClick={() => this.gotoLogin()}>|登录</li>
         </ul>
       );
 
     const loginPart = !this.state.loginStatus && this.state.showLoginPart && (this.state.pageName == pageList.login)
       ? (
-        <LoginPage changeLoginStatus={(val,usr,nic) => this.changeLoginStatus(val,usr,nic)} />
+        <LoginPage changeLoginStatus={(val, usr, nic) => this.changeLoginStatus(val, usr, nic)} />
       )
       : undefined;
 
     const pagePart = this.getPage();
 
     return (
-      <div >
-        <div style={TitleDivStyle}>
-          {loginTitle}
-        </div>
-        <div style={NavDivStyle}>
-          <ul style={TitleButtonStyle}>
-            <li style={TitleButtonStyle}>
-              <label className="LabelTitle">Tou Hou Airline</label>
-            </li>
-            <li style={TitleButtonStyle}>
-              <Link to="/touhouairline_Web_exploded/">
-                <DefaultButton style={TitleButtonStyle} text="返回首页" onClick={()=>this.hideLogin()}/>
-              </Link>
-            </li>
-            <li style={TitleButtonStyle}>
-              <Link to="/touhouairline_Web_exploded/info">
-                <DefaultButton style={TitleButtonStyle} text="航班信息" onClick={()=>this.hideLogin()} />
-              </Link>
-            </li>
-            <li style={TitleButtonStyle}>
-              <Link to="/touhouairline_Web_exploded/aboard">
-                <DefaultButton style={TitleButtonStyle} text="在线值机" onClick={()=>this.hideLogin()} />
-              </Link>
-            </li>
-            <li style={TitleButtonStyle}>
-              <Link to="/touhouairline_Web_exploded/login">
-                <DefaultButton style={TitleButtonStyle} text="会员服务" onClick={()=>this.gotoLogin()} />
-              </Link>
-            </li>
-          </ul>
-        </div>
-        {loginPart}
-        {pagePart}
-      </div>
+      <Layout className="layout" style={{ background: '#FFFFFF' }}>
+        <Header style={{}}>
+          <li style={{color:'#FFFFFF',float:'left', listStyle: 'none'}}>TouHou Airline</li>
+          <Menu
+            theme="dark"
+            mode="horizontal"
+            defaultSelectedKeys={['2']}
+            style={{ lineHeight: '64px', marginLeft: '60%'}}
+          >
+            <Menu.Item key="1">
+              <Link to="/touhouairline_Web_exploded/" onClick={() => this.hideLogin()}>首页</Link>
+            </Menu.Item>
+            <Menu.Item key="2">
+              <Link to="/touhouairline_Web_exploded/" onClick={() => this.hideLogin()}>航班信息</Link>
+            </Menu.Item>
+            <Menu.Item key="3">
+              <Link to="/touhouairline_Web_exploded/" onClick={() => this.hideLogin()}>在线值机</Link>
+            </Menu.Item>
+            <Menu.Item key="4">
+              <Link to="/touhouairline_Web_exploded/" onClick={() => this.gotoLogin()}>会员服务</Link>
+            </Menu.Item>
+          </Menu>
+        </Header>
+        <Layout>
+          <Sider theme="light" style={{background:'#F0F0F0'}}>
+            //TODO: add side list menu for this slider
+          </Sider>
+          <Layout>
+            <Content style={{ lineHeight: '32px', textAlign: 'right', background: '#FFFFFF' }}>
+              {loginTitle}
+            </Content>
+            <Content style={{ background: '#FFFFFF' }}>
+              {loginPart}
+              {loginPart==undefined?pagePart:undefined}
+            </Content>
+          </Layout>
+        </Layout>
+      </Layout>
     );
   }
 }

@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@types/react-router": "^5.0.2",
+    "antd": "^3.19.8",
     "axios": "^0.15.0",
     "office-ui-fabric-react": "^7.4.3",
     "prop-types": "^15.7.2",
@@ -19,6 +20,7 @@
     "babel-eslint": "7.1.1",
     "babel-jest": "18.0.0",
     "babel-loader": "6.2.10",
+    "babel-plugin-import": "^1.12.0",
     "babel-preset-react-app": "^2.2.0",
     "babel-runtime": "^6.20.0",
     "case-sensitive-paths-webpack-plugin": "1.1.4",
@@ -86,6 +88,15 @@
   "babel": {
     "presets": [
       "react-app"
+    ],
+    "plugins": [
+      [
+        "import",
+        {
+          "libraryName": "antd",
+          "style": "css"
+        }
+      ]
     ]
   },
   "eslintConfig": {
