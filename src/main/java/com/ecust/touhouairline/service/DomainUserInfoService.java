@@ -69,7 +69,6 @@ public class DomainUserInfoService {
             stringMap.put("passengerSexError",DomainUserInfoConsts.PASSENGER_SEX_ERROR);
         if (stringMap.isEmpty()){
             addPassengerToUser(user,passenger);
-            userRepository.save(user);
             stringMap.put("success",DomainUserInfoConsts.PASSENGER_ADD_SUCCESS);
             return new MultiMessageResult(true,stringMap);
         }
@@ -113,12 +112,18 @@ public class DomainUserInfoService {
     }
 
     public SingleMessageResult deletePassenger(UserEntity user, PassengerEntity passenger){
-        if (removePassengerToUser(user,passenger)) return new SingleMessageResult(true,DomainUserInfoConsts.PASSENGER_DELETE_SUCCESS);
+        if (removePassengerToUser(user,passenger)) {
+            passengerRepository.delete(passenger);
+            return new SingleMessageResult(true,DomainUserInfoConsts.PASSENGER_DELETE_SUCCESS);
+        }
         return new SingleMessageResult(false,DomainUserInfoConsts.PASSENGER_NOT_FOUND_ERROR);
     }
 
     private void addPassengerToUser(UserEntity user, PassengerEntity passenger){
+        passenger.setUserNo(user.getUserName());
+        passengerRepository.save(passenger);
         user.getPassengersByUserNo().add(passenger);
+        userRepository.save(user);
     }
 
     private void reloadPassengerToUser(UserEntity user, PassengerEntity passenger){

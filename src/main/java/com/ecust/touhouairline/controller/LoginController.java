@@ -17,6 +17,11 @@ public class LoginController {
     @Autowired
     LoginService loginService;
 
+    /**
+     * need username:String
+     *      password:String
+     * @return object:UserEntity message:message
+     */
     @PostMapping(value = "login")
     public ModelMap login(@RequestBody Map<String,Object> params){
         ModelMap map = new ModelMap();
@@ -25,10 +30,14 @@ public class LoginController {
         return map;
     }
 
+    /**
+     * need user:UserEntity
+     * @return message:message
+     */
     @PostMapping(value = "register")
     public ModelMap register(@RequestBody Map<String,Object> params){
         ModelMap map = new ModelMap();
-        UserEntity userEntity = JSON.parseObject(JSON.toJSONString(params),UserEntity.class);
+        UserEntity userEntity = JSON.parseObject(JSON.toJSONString(params.get("user")),UserEntity.class);
         SingleMessageResult result = loginService.register(userEntity);
         map.put("result",result);
         return map;
