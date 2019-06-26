@@ -1,4 +1,4 @@
-package com.ecust.touhouairline;
+package com.ecust.touhouairline.service;
 
 import com.alibaba.fastjson.JSON;
 import com.ecust.touhouairline.controller.DomainOrderController;

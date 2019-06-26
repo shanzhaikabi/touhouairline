@@ -1,4 +1,4 @@
-package com.ecust.touhouairline;
+package com.ecust.touhouairline.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.ecust.touhouairline.controller.CreateBoardingPassContorller;
@@ -19,6 +19,9 @@ public class TestDomainUser {
 
     @Autowired
     CreateBoardingPassContorller createBoardingPassContorller;
+
+    @Autowired
+    DomainUserController domainUserController;
 
     @Test
     public void testAddPassenger(){
