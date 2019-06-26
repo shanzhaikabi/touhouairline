@@ -6,6 +6,7 @@ public final class DomainFlightInfoConsts {
     public static final String FLIGHT_CHANGE_SUCCESS = "修改航班成功";
     public static final String FLIGHT_DELETE_SUCCESS = "删除航班成功";
     public static final String FLIGHT_STATUS_SUCCESS = "修改航班状态成功";
+    public static final String FLIGHT_GET_SUCCESS = "查找航班成功";
 
     public static final String UNKNOWN_ERROR = "未知错误";
     public static final String FLIGHT_EXISTS_ERROR = "航班已存在";
@@ -20,4 +21,6 @@ public final class DomainFlightInfoConsts {
     public static final String PLANE_ERROR = "请输入正确的飞机型号";
     public static final String FLIGHT_STATUS_SAME = "航班状态相同";
     public static final String FLIGHT_STATUS_CANCEL = "不能将状态修改为已取消";
+    public static final String FLIGHT_NOT_EXISTS_ERROR = "航班不存在";
+    public static final String FLIGHT_NOT_CHECK_IN_ERROR = "航班不在值机状态";
 }
