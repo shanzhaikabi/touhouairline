@@ -3,6 +3,7 @@ package com.ecust.touhouairline.controller;
 import com.alibaba.fastjson.JSON;
 import com.ecust.touhouairline.entity.FlightEntity;
 import com.ecust.touhouairline.service.DomainFlightInfoService;
+import com.ecust.touhouairline.utils.Result;
 import com.ecust.touhouairline.utils.SingleMessageResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.ModelMap;
@@ -22,7 +23,7 @@ public class DomainFlightController {
     @PostMapping(value = "add_flight")
     public ModelMap addFlight(@RequestBody Map<String,Object> params){
         ModelMap map = new ModelMap();
-        FlightEntity flight = JSON.parseObject((String)params.get("flight"),FlightEntity.class);
+        FlightEntity flight = JSON.parseObject(JSON.toJSONString(params.get("flight")),FlightEntity.class);
         SingleMessageResult result = domainFlightInfoService.addFlight(flight);
         map.put("result",result);
         return map;
@@ -35,7 +36,7 @@ public class DomainFlightController {
     @PostMapping(value = "change_flight")
     public ModelMap changeFlight(@RequestBody Map<String,Object> params){
         ModelMap map = new ModelMap();
-        FlightEntity flight = JSON.parseObject((String)params.get("flight"),FlightEntity.class);
+        FlightEntity flight = JSON.parseObject(JSON.toJSONString(params.get("flight")),FlightEntity.class);
         SingleMessageResult result = domainFlightInfoService.changeFlight(flight);
         map.put("result",result);
         return map;
@@ -64,6 +65,18 @@ public class DomainFlightController {
         ModelMap map = new ModelMap();
         String flightNo = (String)params.get("flightNo");
         SingleMessageResult result = domainFlightInfoService.changeFlightState(flightNo,(String)params.get("state"));
+        map.put("result",result);
+        return map;
+    }
+
+    /**
+     * need nothing!
+     * @return object:Collection<planeEntity>
+     */
+    @PostMapping(value = "get_planes")
+    public ModelMap getPlanes(@RequestBody Map<String,Object> params){
+        ModelMap map = new ModelMap();
+        Result result = domainFlightInfoService.getPlanes();
         map.put("result",result);
         return map;
     }

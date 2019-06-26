@@ -49,7 +49,7 @@ public class TestDomainFlight {
                 "\"planeNo\":\"1\"," +
                 "\"mileage\":101}");
         System.out.println(JSON.toJSONString(domainFlightController.changeFlight(params)));
-    }
+    }                   
 
     @Test
     public void changeFlightState(){
@@ -59,4 +59,9 @@ public class TestDomainFlight {
         System.out.println(JSON.toJSONString(domainFlightController.changeFlightState(params)));
     }
 
+    @Test
+    public void getPlanes(){
+        Map<String, Object> params = new LinkedHashMap<>();
+        System.out.println(JSON.toJSONString(domainFlightController.getPlanes(params)));
+    }
 }

@@ -29,6 +29,13 @@ public class DomainFlightInfoService {
     @Autowired
     DomainOrderService domainOrderService;
 
+    public Result<Collection<PlaneEntity>> getPlanes(){
+        if (planeRepository.count() > 0){
+            return new Result<>(true,planeRepository.findAll());
+        }
+        return new Result<>(false,null);
+    }
+
     public SingleMessageResult addFlight(FlightEntity flight){
         SingleMessageResult checkResult = checkFlight(flight);
         if (!checkResult.isSuccess()) return checkResult;

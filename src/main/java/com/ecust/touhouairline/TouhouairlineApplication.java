@@ -14,8 +14,4 @@ public class TouhouairlineApplication {
         SpringApplication.run(TouhouairlineApplication.class, args);
     }
 
-    @Bean
-    public OpenEntityManagerInViewFilter openEntityManagerInViewFilter(){
-        return new OpenEntityManagerInViewFilter();
-    }
 }

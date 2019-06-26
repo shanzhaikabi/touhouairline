@@ -64,9 +64,7 @@ public class QueryFlightService {
             Timestamp departTime,Timestamp returnTime, String departPlace, String destination, boolean isOneWay){
         //只查询一天内的机票
         Timestamp end = (Timestamp)departTime.clone();
-        end.setHours(23);
-        end.setMinutes(59);
-        end.setSeconds(59);
+        end.setTime(end.getTime() + 24 * 3600 * 1000);
         Collection<FlightEntity> flights =
                 flightRepository.findFlightEntitiesByDepartTimeBetweenAndDepartPlaceEqualsAndDestinationEquals(
                         departTime,end,departPlace,destination);
@@ -74,9 +72,7 @@ public class QueryFlightService {
         if (!flights.isEmpty()) map.put("depart",flights);
         if (!isOneWay){
             end = (Timestamp)returnTime.clone();
-            end.setHours(23);
-            end.setMinutes(59);
-            end.setSeconds(59);
+            end.setTime(end.getTime() + 24 * 3600 * 1000);
             Collection<FlightEntity> flightsReturn =
                     flightRepository.findFlightEntitiesByDepartTimeBetweenAndDepartPlaceEqualsAndDestinationEquals(
                             returnTime,end,destination,departPlace);

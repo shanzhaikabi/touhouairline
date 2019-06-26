@@ -20,8 +20,8 @@ public class TestQueryFlight {
     @Test
     public void queryTwoWayFlight(){
         Map<String, Object> params = new LinkedHashMap<>();
-        params.put("departTime","2019/06/25");
-        params.put("returnTime","2019/06/24");
+        params.put("departTime","2019/06/26");
+        params.put("returnTime","2019/06/25");
         params.put("departPlace","上海");
         params.put("destination","北京");
         params.put("isOneWay",false);
@@ -31,8 +31,8 @@ public class TestQueryFlight {
     @Test
     public void queryOneWayFlight(){
         Map<String, Object> params = new LinkedHashMap<>();
-        params.put("departTime","2019/06/25");
-        params.put("returnTime","2019/06/25");
+        params.put("departTime","2019/06/26");
+        params.put("returnTime","2019/06/26");
         params.put("departPlace","上海");
         params.put("destination","北京");
         params.put("isOneWay",true);
