@@ -56,6 +56,17 @@ public class QueryFlightService {
 
     /**
      * 显示航班详情
+     * @param flightNo 航班号
+     * @return 三种舱位的位置数量
+     */
+    public Result<Map<String,Integer>> showDetailByFlight(String flightNo){
+        if(!flightRepository.existsById(flightNo)) return new Result<>(false,null);
+        FlightEntity flight = flightRepository.getOne(flightNo);
+        return showDetailByFlight(flight);
+    }
+
+    /**
+     * 显示航班详情
      * @param flight 航班实体
      * @return 三种舱位的位置数量
      */

@@ -9,10 +9,10 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface OrderDetailRepository extends JpaRepository<OrderDetailEntity,String> {
     OrderDetailEntity findByDetailNo(Integer detailNo);
-    @Query(value = "SELECT od.orderNo FROM flight f,ordermaster om,orderdetail od " +
+    @Query(value = "SELECT od.detailNo FROM flight f,ordermaster om,orderdetail od " +
             "where f.flightNo=?1 and om.flightNo =f.flightNo  and om.orderNo = od.orderNo and od.passport=?2", nativeQuery = true)
     Integer findByPassport(String flightNo, String passport);
-    @Query(value = "SELECT od.orderNo FROM flight f,ordermaster om,orderdetail od " +
+    @Query(value = "SELECT od.detailNo FROM flight f,ordermaster om,orderdetail od " +
             "where f.flightNo=?1 and om.flightNo =f.flightNo  and om.orderNo = od.orderNo and od.identity=?2", nativeQuery = true)
     Integer findByIdentity(String flightNo, String passport);
     @Query(value = "SELECT count(*) FROM flight f,ordermaster om,orderdetail od " +

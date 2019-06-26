@@ -1,6 +1,7 @@
 package com.ecust.touhouairline.service;
 
 import com.ecust.touhouairline.consts.DomainOrderConsts;
+import com.ecust.touhouairline.consts.OrderDetailConsts;
 import com.ecust.touhouairline.consts.OrderMasterConsts;
 import com.ecust.touhouairline.entity.FlightEntity;
 import com.ecust.touhouairline.entity.OrderDetailEntity;
@@ -12,10 +13,12 @@ import com.ecust.touhouairline.repository.OrderMasterRepository;
 import com.ecust.touhouairline.repository.UserRepository;
 import com.ecust.touhouairline.utils.Result;
 import com.ecust.touhouairline.utils.ResultWithSingleMessage;
-import org.hibernate.criterion.Order;
+import com.ecust.touhouairline.utils.SingleMessageResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.xml.crypto.dom.DOMCryptoContext;
+import java.sql.Date;
 import java.util.Arrays;
 import java.util.Collection;
 
@@ -41,8 +44,42 @@ public class DomainOrderService {
     public Result<Collection<OrderDetailEntity>> showOrderDetail(OrderMasterEntity orderMaster){
         return new Result<>(true,orderMaster.getOrderdetailsByOrderNo());
     }
-    //TODO:完成添加订单
-    public void createOrder(){}
+
+    /**
+     *
+     * @param orderMaster 订单，应当包含下单用户、航班、舱位
+     * @param orderDetails 订单详情，应当包含乘客的信息，座位号可空
+     * @return 一条消息 是否成功
+     */
+    public SingleMessageResult createOrder(OrderMasterEntity orderMaster, Collection<OrderDetailEntity> orderDetails){
+        orderMaster.setState(OrderMasterConsts.UNPAID);
+        orderMaster.setOrderDate(new Date(new java.util.Date().getTime()));
+        int sum = 0;
+        String ticketClass = orderMaster.getTicketClass();
+        int singleTicketPrice = 0;
+        if(ticketClass.equals(OrderMasterConsts.ECONOMY_CLASS)){
+            singleTicketPrice = orderMaster.getFlightByFlightNo().getEconomyPrice();
+        }
+        System.out.println(singleTicketPrice);
+        for(OrderDetailEntity orderDetail : orderDetails){
+            orderDetail.setState(OrderDetailConsts.BEFORE_CHECK_IN);
+            if(orderDetail.getPassengerType().equals(OrderDetailConsts.ADULT)) {
+                sum += singleTicketPrice;
+                orderDetail.setFee(singleTicketPrice);
+            }
+            else{
+                sum += singleTicketPrice/ 2;
+                orderDetail.setFee(singleTicketPrice);
+            }
+            orderDetail.setOrdermasterByOrderNo(orderMaster);
+        }
+        orderMaster.setOrderdetailsByOrderNo(orderDetails);
+        orderMasterRepository.save(orderMaster);
+        orderDetailRepository.saveAll(orderDetails);
+        if(sum != orderMaster.getSum())
+            return new SingleMessageResult(false,DomainOrderConsts.MONEY_NOT_MATCH_ERROR);
+        return new SingleMessageResult(true, DomainOrderConsts.CREATE_SUCCESS);
+    }
 
     /**
      *

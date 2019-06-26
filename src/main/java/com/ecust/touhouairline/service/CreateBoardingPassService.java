@@ -39,7 +39,7 @@ public class CreateBoardingPassService {
         if(!flight.getFlightState().equals(FlightConsts.CHECK_IN)){
             return new SingleMessageResult(false ,DomainFlightInfoConsts.FLIGHT_NOT_CHECK_IN_ERROR);
         }
-        return new SingleMessageResult(true ,flight.getFlightNo());
+        return new SingleMessageResult(true ,DomainFlightInfoConsts.FLIGHT_GET_SUCCESS);
     }
 
     public SingleMessageResult getFlight(String flightNo){
@@ -98,6 +98,10 @@ public class CreateBoardingPassService {
         boardingPassInfo.put("seat",orderDetail.getSeat().toString());
         return new ResultWithSingleMessage<>(true,boardingPassInfo,null);
     }
+    public SingleMessageResult printBoardingPass(Integer detailNo){
+        return new SingleMessageResult(true, null);
+    }
+
     public SingleMessageResult luggageShipping(Integer detailNo, Integer weight){
         if(orderDetailRepository.findByDetailNo(detailNo)==null) {
             return new SingleMessageResult(false, OrderDetailConsts.ORDERDEDAIL_NOT_EXISTS_ERROR);
@@ -110,6 +114,6 @@ public class CreateBoardingPassService {
         Integer fee = new Integer(2*weight);
         luggageEntity.setShippingFee(fee);
         luggageRepository.save(luggageEntity);
-        return new SingleMessageResult(true, fee.toString());
+        return new SingleMessageResult(true, LuggageConsts.LUGGAGE_SHIPPING_SUCCESS);
     }
 }
