@@ -3,6 +3,7 @@ package com.ecust.touhouairline.service;
 import com.ecust.touhouairline.consts.DomainFlightInfoConsts;
 import com.ecust.touhouairline.consts.OrderDetailConsts;
 import com.ecust.touhouairline.entity.OrderDetailEntity;
+import com.ecust.touhouairline.utils.ResultWithSingleMessage;
 import com.ecust.touhouairline.utils.SingleMessageResult;
 import com.ecust.touhouairline.consts.FlightConsts;
 import com.ecust.touhouairline.entity.FlightEntity;
@@ -11,7 +12,8 @@ import com.ecust.touhouairline.repository.OrderDetailRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author 姚迟亮
@@ -39,7 +41,7 @@ public class CreateBoardingPassService {
         return checkFlightStatus(flight);
     }
 
-    public SingleMessageResult checkPassengerInfo(String flightNo, String  certificateType, String certificateNo){
+    private SingleMessageResult checkPassengerInfo(String flightNo, String  certificateType, String certificateNo){
         FlightEntity flight = flightRepository.findByFlightNo(flightNo);
         Integer detailNo = new Integer(-1);
 
@@ -71,5 +73,22 @@ public class CreateBoardingPassService {
         orderDetailEntity.setState(OrderDetailConsts.BOARDING_PASS_EXSIT);
         orderDetailRepository.save(orderDetailEntity);
         return new SingleMessageResult(true ,detailNo.toString());
+    }
+    public ResultWithSingleMessage<Map<String,String>> getBoardingPassInfo(String flightNo, String  certificateType, String certificateNo){
+        SingleMessageResult userInfo = checkPassengerInfo(flightNo,certificateType,certificateNo);
+        if(!userInfo.isSuccess()){
+            return new ResultWithSingleMessage<>(false,null,userInfo.getMessage());
+        }
+        FlightEntity flight = flightRepository.findByFlightNo(flightNo);
+        OrderDetailEntity orderDetail = orderDetailRepository.findByDetailNo(new Integer(userInfo.getMessage()));
+        Map<String,String> boardingPassInfo = new HashMap<>();
+        boardingPassInfo.put("passengerName",orderDetail.getPassengerName());
+        boardingPassInfo.put("flightNo",flight.getFlightNo());
+        boardingPassInfo.put("departPlace",flight.getDepartPlace());
+        boardingPassInfo.put("destination",flight.getDestination());
+        boardingPassInfo.put("boardingGate",flight.getBoardingGate());
+        boardingPassInfo.put("departTime",flight.getDepartTime().toString());
+        boardingPassInfo.put("seat",orderDetail.getSeat().toString());
+        return new ResultWithSingleMessage<>(true,boardingPassInfo,null);
     }
 }
