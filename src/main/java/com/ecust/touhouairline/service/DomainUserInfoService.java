@@ -3,6 +3,7 @@ package com.ecust.touhouairline.service;
 import com.ecust.touhouairline.consts.DomainUserInfoConsts;
 import com.ecust.touhouairline.entity.PassengerEntity;
 import com.ecust.touhouairline.entity.UserEntity;
+import com.ecust.touhouairline.repository.PassengerRepository;
 import com.ecust.touhouairline.repository.UserRepository;
 import com.ecust.touhouairline.utils.MultiMessageResult;
 import com.ecust.touhouairline.utils.ResultWithSingleMessage;
@@ -22,6 +23,8 @@ import java.util.Map;
 public class DomainUserInfoService {
     @Autowired
     UserRepository userRepository;
+    @Autowired
+    PassengerRepository passengerRepository;
 
     public SingleMessageResult changeUserInfo(UserEntity user, UserEntity result){
         if (!result.getPassword().isEmpty()) {
@@ -38,6 +41,22 @@ public class DomainUserInfoService {
     public ResultWithSingleMessage<Collection<PassengerEntity>> showPassages(UserEntity user){
         if(user.getPassengersByUserNo().isEmpty()) return new ResultWithSingleMessage(false,null,DomainUserInfoConsts.PASSENGER_NOT_FOUND);
         return new ResultWithSingleMessage(true,user.getPassengersByUserNo(),null);
+    }
+
+    public ResultWithSingleMessage<Collection<PassengerEntity>> showPassages(String username){
+        if (!userRepository.existsById(username)) return new ResultWithSingleMessage<>(false,null,DomainUserInfoConsts.PASSENGER_NOT_FOUND_ERROR);
+        UserEntity user = userRepository.getOne(username);
+        return showPassages(user);
+    }
+
+    public MultiMessageResult addPassenger(String username, PassengerEntity passenger) {
+        if (!userRepository.existsById(username)){
+            Map<String,String> msg = new LinkedHashMap<>();
+            msg.put("error",DomainUserInfoConsts.PASSENGER_NOT_FOUND_ERROR);
+            return new MultiMessageResult(false, msg);
+        }
+        UserEntity user = userRepository.getOne(username);
+        return addPassenger(user,passenger);
     }
 
     public MultiMessageResult addPassenger(UserEntity user, PassengerEntity passenger){
@@ -57,6 +76,16 @@ public class DomainUserInfoService {
         return new MultiMessageResult(false,stringMap);
     }
 
+    public MultiMessageResult changePassenger(String username, PassengerEntity passenger) {
+        if (!userRepository.existsById(username)){
+            Map<String,String> msg = new LinkedHashMap<>();
+            msg.put("error",DomainUserInfoConsts.PASSENGER_NOT_FOUND_ERROR);
+            return new MultiMessageResult(false, msg);
+        }
+        UserEntity user = userRepository.getOne(username);
+        return changePassenger(user,passenger);
+    }
+
     public MultiMessageResult changePassenger(UserEntity user, PassengerEntity passenger){
         Map<String,String> stringMap = new LinkedHashMap();
         if (passenger.getPassengerName().isEmpty())
@@ -73,6 +102,14 @@ public class DomainUserInfoService {
             return new MultiMessageResult(true,stringMap);
         }
         return new MultiMessageResult(false,stringMap);
+    }
+
+    public SingleMessageResult deletePassenger(String userName, Integer passengerNo){
+        if (!userRepository.existsById(userName))  return new SingleMessageResult(false,DomainUserInfoConsts.PASSENGER_NOT_FOUND_ERROR);
+        if (!passengerRepository.existsById(passengerNo))  return new SingleMessageResult(false,DomainUserInfoConsts.PASSENGER_NOT_FOUND_ERROR);
+        UserEntity user = userRepository.getOne(userName);
+        PassengerEntity passenger = passengerRepository.getOne(passengerNo);
+        return deletePassenger(user,passenger);
     }
 
     public SingleMessageResult deletePassenger(UserEntity user, PassengerEntity passenger){

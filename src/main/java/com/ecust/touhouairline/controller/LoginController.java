@@ -17,7 +17,7 @@ public class LoginController {
     @Autowired
     LoginService loginService;
 
-    @RequestMapping(value = "login",method = RequestMethod.POST)
+    @PostMapping(value = "login")
     public ModelMap login(@RequestBody Map<String,Object> params){
         ModelMap map = new ModelMap();
         ResultWithSingleMessage result = loginService.Login(params.get("username").toString(),params.get("password").toString(),true);
@@ -28,7 +28,7 @@ public class LoginController {
     @PostMapping(value = "register")
     public ModelMap register(@RequestBody Map<String,Object> params){
         ModelMap map = new ModelMap();
-        UserEntity userEntity = JSON.parseObject(params.toString(),UserEntity.class);
+        UserEntity userEntity = JSON.parseObject(JSON.toJSONString(params),UserEntity.class);
         SingleMessageResult result = loginService.register(userEntity);
         map.put("result",result);
         return map;
