@@ -11,6 +11,7 @@ import 'antd/dist/antd.css';
 import { Route, Switch, BrowserRouter as Router } from 'react-router-dom';
 
 import LoginPage from './views/loginpage/LoginPage';
+import FlightnoPage from './views/boardingpasspage/FlightnoPage';
 //import RegisterPage from './views/loginpage/RegisterPage';
 import './App.css';
 
@@ -38,6 +39,8 @@ export default class App extends React.Component {
     switch (this.state.pageName) {
       /*case pageList.register:
         return (<RegisterPage success={() => this.gotoLogin()} />);*/
+      case pageList.aboard:
+        return (<FlightnoPage />);
 
       case pageList.login:
         return (<LoginPage changeLoginStatus={(val, usr, nic) => this.changeLoginStatus(val, usr, nic)} />);

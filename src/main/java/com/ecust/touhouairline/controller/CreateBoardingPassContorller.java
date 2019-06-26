@@ -40,7 +40,7 @@ public class CreateBoardingPassContorller {
     @PostMapping(value = "printBoardingPass")
     public ModelMap printBoardingPass(@RequestBody Map<String,Object> params){
         ModelMap map = new ModelMap();
-        Integer detailNo = new Integer((String)params.get("flightNo"));
+        Integer detailNo = new Integer((String)params.get("detailNo"));
         SingleMessageResult result = createBoardingPassService.printBoardingPass(detailNo);
         map.put("result",result);
         return map;
