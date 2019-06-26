@@ -1,6 +1,7 @@
 package com.ecust.touhouairline.service;
 
 import com.ecust.touhouairline.consts.DomainUserInfoConsts;
+import com.ecust.touhouairline.consts.LoginConsts;
 import com.ecust.touhouairline.entity.PassengerEntity;
 import com.ecust.touhouairline.entity.UserEntity;
 import com.ecust.touhouairline.repository.PassengerRepository;
@@ -26,16 +27,20 @@ public class DomainUserInfoService {
     @Autowired
     PassengerRepository passengerRepository;
 
-    public SingleMessageResult changeUserInfo(UserEntity user, UserEntity result){
-        if (!result.getPassword().isEmpty()) {
-            if (result.getPassword().length() < 6 || result.getPassword().length() > 33) new SingleMessageResult(false,DomainUserInfoConsts.USER_CHANGE_SUCCESS);
-            user.setPassword(result.getPassword());
-        }
-        if (!result.getNickName().isEmpty()) user.setNickName(result.getNickName());
-        if (!result.getEmail().isEmpty()) user.setEmail(result.getEmail());
-        if (!result.getUserPhone().isEmpty()) user.setUserPhone(result.getUserPhone());
+    public SingleMessageResult changeUserInfo(UserEntity user){
+        SingleMessageResult result = checkUser(user);
+        if (!result.isSuccess()) return result;
         userRepository.save(user);
         return new SingleMessageResult(true,DomainUserInfoConsts.USER_CHANGE_SUCCESS);
+    }
+
+    private SingleMessageResult checkUser(UserEntity user){
+        if (!userRepository.existsById(user.getUserName())) return new SingleMessageResult(false, LoginConsts.USERNAME_NOT_FOUND_ERROR);
+        if (user.getPassword().length() < 6 || user.getPassword().length() > 33) new SingleMessageResult(false,LoginConsts.PASSWORD_LENGTH_ERROR);
+        if (user.getNickName().isEmpty()) new SingleMessageResult(false,LoginConsts.NICKNAME_ERROR);
+        if (user.getEmail().isEmpty()) return new SingleMessageResult(false,LoginConsts.EMAIL_ERROR);
+        if (user.getUserPhone().isEmpty()) new SingleMessageResult(false,LoginConsts.PHONE_ERROR);
+        return new SingleMessageResult(true,null);
     }
 
     public ResultWithSingleMessage<Collection<PassengerEntity>> showPassages(UserEntity user){
@@ -94,9 +99,7 @@ public class DomainUserInfoService {
         if (passenger.getSex().isEmpty())
             stringMap.put("passengerSexError",DomainUserInfoConsts.PASSENGER_SEX_ERROR);
         if (stringMap.isEmpty()) {
-            addPassengerToUser(user, passenger);
             reloadPassengerToUser(user, passenger);
-            userRepository.save(user);
             stringMap.put("success",DomainUserInfoConsts.PASSENGER_CHANGE_SUCCESS);
             return new MultiMessageResult(true,stringMap);
         }
@@ -113,7 +116,6 @@ public class DomainUserInfoService {
 
     public SingleMessageResult deletePassenger(UserEntity user, PassengerEntity passenger){
         if (removePassengerToUser(user,passenger)) {
-            passengerRepository.delete(passenger);
             return new SingleMessageResult(true,DomainUserInfoConsts.PASSENGER_DELETE_SUCCESS);
         }
         return new SingleMessageResult(false,DomainUserInfoConsts.PASSENGER_NOT_FOUND_ERROR);
@@ -130,17 +132,18 @@ public class DomainUserInfoService {
         for (PassengerEntity passengerEntity : user.getPassengersByUserNo()) {
             if (passengerEntity.getPassengerNo().equals(passenger.getPassengerNo())){
                 user.getPassengersByUserNo().remove(passengerEntity);
-                user.getPassengersByUserNo().add(passenger);
+                addPassenger(user,passenger);
                 return;
             }
         }
-        addPassenger(user,passenger);
     }
 
     private boolean removePassengerToUser(UserEntity user, PassengerEntity passenger){
         for (PassengerEntity passengerEntity : user.getPassengersByUserNo()) {
             if (passengerEntity.getPassengerNo().equals(passenger.getPassengerNo())){
                 user.getPassengersByUserNo().remove(passengerEntity);
+                userRepository.save(user);
+                passengerRepository.delete(passenger);
                 return true;
             }
         }

@@ -18,6 +18,7 @@ public class QueryFlightController {
     @Autowired
     QueryFlightService queryFlightService;
 
+
     /**
      * need departTime:Timestamp
      *      departPlace:String
@@ -33,6 +34,39 @@ public class QueryFlightController {
         String destination = (String) params.get("destination");
         Integer passengerNum = (Integer) params.get("passengerNum");
         Result result = queryFlightService.queryOneWayTicket(departTime,departPlace,destination,passengerNum);
+        map.put("result",result);
+        return map;
+    }
+
+    private Timestamp stringToTimestamp(String str){
+        str = str.replaceAll("/","-");
+        str += " 00:00:00";
+        try {
+            Timestamp ts = Timestamp.valueOf(str);
+            return ts;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    /**
+     * need departTime:String yyyy/mm/dd
+     *      returnTime:String
+     *      departPlace:String
+     *      destination:String
+     *      passengerNum:Integer
+     * @return Collection<FlightEntity> : 出发当天的航班列表
+     */
+    @PostMapping(value = "query_two_way_ticket")
+    public ModelMap queryTwoWayTicket(@RequestBody Map<String,Object> params){
+        ModelMap map = new ModelMap();
+        Timestamp departTime = stringToTimestamp((String)params.get("departTime"));
+        Timestamp returnTime = stringToTimestamp((String)params.get("returnTime"));
+        String departPlace = (String) params.get("departPlace");
+        String destination = (String) params.get("destination");
+        Boolean isOneWay = (Boolean) params.get("isOneWay");
+        Result result = queryFlightService.queryTwoWayTicket(departTime,returnTime,departPlace,destination,isOneWay);
         map.put("result",result);
         return map;
     }

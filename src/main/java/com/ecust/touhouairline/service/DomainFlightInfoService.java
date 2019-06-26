@@ -84,7 +84,7 @@ public class DomainFlightInfoService {
     private void cancelOrdersByFlightNo(String flightNo){
         Result<Collection<OrderMasterEntity>> result = domainOrderService.getOrderMasterByFlight(flightNo);
         if (result.isSuccess()) {
-            result.getObject().forEach(u -> domainOrderService.cancelOrder(u));
+            result.getObject().forEach(u -> domainOrderService.cancelOrder(u,true));
         }
     }
 
@@ -105,7 +105,7 @@ public class DomainFlightInfoService {
             return new SingleMessageResult(false,DomainFlightInfoConsts.PREMIUM_PRICE_ERROR);
         if (flight.getFirstPrice() == 0)
             return new SingleMessageResult(false,DomainFlightInfoConsts.FIRST_PRICE_ERROR);
-        if (flight.getPlaneNo().isEmpty() || planeRepository.existsById(flight.getPlaneNo()))
+        if (flight.getPlaneNo().isEmpty() || !planeRepository.existsById(flight.getPlaneNo()))
             return new SingleMessageResult(false,DomainFlightInfoConsts.PLANE_ERROR);
         return new SingleMessageResult(true,null);
     }

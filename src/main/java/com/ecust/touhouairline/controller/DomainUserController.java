@@ -28,9 +28,8 @@ public class DomainUserController {
     @PostMapping(value = "change_user_info")
     public ModelMap changeUserInfo(@RequestBody Map<String,Object> params){
         ModelMap map = new ModelMap();
-        UserEntity userEntity = JSON.parseObject(JSON.toJSONString(params.get("user")),UserEntity.class);
-        UserEntity target = JSON.parseObject(JSON.toJSONString(params.get("target")),UserEntity.class);
-        SingleMessageResult result = domainUserInfoService.changeUserInfo(userEntity,target);
+        UserEntity userEntity = JSON.parseObject((String)(params.get("user")),UserEntity.class);
+        SingleMessageResult result = domainUserInfoService.changeUserInfo(userEntity);
         map.put("result",result);
         return map;
     }
@@ -60,7 +59,7 @@ public class DomainUserController {
     public ModelMap changePassenger(@RequestBody Map<String,Object> params){
         ModelMap map = new ModelMap();
         String username = (String)(params.get("userName"));
-        PassengerEntity target = JSON.parseObject(JSON.toJSONString(params.get("passenger")),PassengerEntity.class);
+        PassengerEntity target = JSON.parseObject((String)params.get("passenger"),PassengerEntity.class);
         MultiMessageResult result = domainUserInfoService.changePassenger(username,target);
         map.put("result",result);
         return map;
@@ -68,14 +67,14 @@ public class DomainUserController {
 
     /**
      * need userName:String
-     *      passengerId:Integer
+     *      passengerNo:Integer
      * @return message:message
      */
     @PostMapping(value = "remove_passenger")
     public ModelMap removePassenger(@RequestBody Map<String,Object> params){
         ModelMap map = new ModelMap();
-        String username = (String) params.get("user");
-        Integer target = (Integer) params.get("passengerId");
+        String username = (String) params.get("userName");
+        Integer target = Integer.valueOf((String)params.get("passengerNo"));
         SingleMessageResult result = domainUserInfoService.deletePassenger(username,target);
         map.put("result",result);
         return map;
@@ -85,7 +84,7 @@ public class DomainUserController {
      * need userName:String
      * @return object:Collection<PassengerEntity> message:message
      */
-    @PostMapping(value = "showpassengers")
+    @PostMapping(value = "show_passengers")
     public ModelMap showPassengers(@RequestBody Map<String,Object> params){
         ModelMap map = new ModelMap();
         String username = JSON.toJSONString(params.get("userName"));
